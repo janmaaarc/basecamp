@@ -3,6 +3,11 @@ set -e
 
 VAULT="${1:-$HOME/Documents/your-vault}"
 
+if ! command -v claude &>/dev/null; then
+  echo "Error: Claude Code is not installed. Install it from https://claude.ai/code"
+  exit 1
+fi
+
 echo "Setting up basecamp..."
 
 # Core Claude files

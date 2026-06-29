@@ -16,6 +16,8 @@ Then open `~/.claude/CLAUDE.md`, fill in your stack, and follow [Setup](#setup) 
 
 ## What This Is
 
+This is the exact setup I use daily. Not a template made for show. A working system built and refined through real projects.
+
 Most Claude Code setups are minimal. This one is not. It covers:
 
 - Global instructions Claude follows on every project

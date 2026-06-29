@@ -198,19 +198,24 @@ npx claude-mem update
 
 ## FAQ
 
-**Do I need Obsidian?**
+### Do I need Obsidian?
+
 No. The per-project memory system works with any folder. Obsidian just adds graph view and backlinks. Point the vault path in CLAUDE.md to any directory.
 
-**Does this work on Windows?**
+### Does this work on Windows?
+
 Claude Code itself has limited Windows support. setup.sh requires bash. Linux is mostly supported. macOS is the primary platform.
 
-**What if I don't use RTK?**
+### What if I don't use RTK?
+
 Skip it. Remove the `@RTK.md` import from CLAUDE.md. The rest of the setup works without it.
 
-**Do I need all the plugins?**
+### Do I need all the plugins?
+
 No. Install what fits your workflow. ECC is the most useful. Caveman and Ponytail change how Claude responds. Safety hooks is optional but recommended.
 
-**Can I use this with my stack?**
+### Can I use this with my stack?
+
 Yes. Fill in Your Defaults in CLAUDE.md and import the relevant rules file: `@rules/typescript.md`, `@rules/web.md`, `@rules/ai-agents.md`, `@rules/data.md`, `@rules/security.md`, or `@rules/mobile.md`.
 
 ## License

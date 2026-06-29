@@ -6,7 +6,7 @@ Recurring mistakes to avoid. Check before implementing anything.
 
 ## Format
 
-**[Date] — [Mistake]**
+**[Date]: [Mistake]**
 - What happened:
 - Root cause:
 - How to avoid:

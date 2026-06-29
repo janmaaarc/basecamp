@@ -122,8 +122,8 @@ At session start, Claude will:
 3. Read PROJECT.md, MISTAKES.md, and CONTRACT.md before doing anything.
 
 - PROJECT.md — what this project is. Max 30 lines. Overwrite each session, no history.
-- MISTAKES.md — mistakes to avoid. Add new ones, remove resolved ones.
-- CONTRACT.md — plan for risky changes. Created before implementing, deleted after.
+- MISTAKES.md — mistakes to avoid. Claude appends to it automatically when corrected. Remove resolved ones.
+- CONTRACT.md — plan for risky changes. Created before implementing. Claude deletes it after the change is implemented and user verifies.
 
 # High-Risk Changes
 <!-- Applies to: migrations, auth, major refactors, breaking changes -->

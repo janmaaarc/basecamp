@@ -46,10 +46,10 @@ Most Claude Code setups are minimal. This one is not. It covers:
 
 - macOS (Linux partially supported, Windows not tested)
 - [Claude Code](https://claude.ai/code)
-- [Obsidian](https://obsidian.md) (free) — for per-project memory files
-- Homebrew — for RTK
-- Python 3.10+ — for Headroom
-- Node.js 18+ — for claude-mem
+- [Obsidian](https://obsidian.md) (free, for per-project memory files)
+- Homebrew (for RTK)
+- Python 3.10+ (for Headroom)
+- Node.js 18+ (for claude-mem)
 
 ## Setup
 

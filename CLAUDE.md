@@ -142,7 +142,7 @@ At session start, Claude will:
 
 # Writing Style
 
-- No dashes as punctuation. Use periods, commas, or colons.
+- Never use em dashes (— or --) as punctuation. Use periods, commas, or colons instead.
 - No emojis.
 - No "+" as a conjunction. Use "and" or "&".
 - Direct and concise. No buzzwords.

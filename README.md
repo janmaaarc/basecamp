@@ -79,16 +79,12 @@ cp -r Templates/ ~/Documents/your-vault/Templates/
 
 **RTK (token savings 60-90%):**
 ```bash
-brew tap rtk-ai/tap && brew trust rtk-ai/tap && brew install rtk
+brew tap rtk-ai/tap && brew install rtk
 ```
 
 **Headroom (context compression):**
-```bash
-pip3 install "headroom-ai[proxy]"
-headroom install apply
-echo 'export ANTHROPIC_BASE_URL=http://127.0.0.1:8787' >> ~/.zshrc
-headroom mcp install
-```
+
+Follow the official install guide: https://github.com/headroomlabs-ai/headroom
 
 **claude-mem (persistent memory):**
 ```bash

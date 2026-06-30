@@ -21,8 +21,8 @@ Related: [[PROJECT]] | [[MISTAKES]]
 ## Open Questions
 <!-- Things Claude needs user to clarify before implementing -->
 
-1.
-2.
+1. <!-- Question here -->
+2. <!-- Question here -->
 
 ## Approval
 

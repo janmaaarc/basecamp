@@ -15,6 +15,12 @@
 - Deployment: [Vercel / Railway / Fly.io]
 - Icons: [Lucide / Heroicons]
 
+# Frontend
+<!-- Remove if not building UI -->
+- Run `/impeccable audit` and `/impeccable polish` before shipping any UI.
+- Use your chosen icon library. No emoji as icons.
+- No inline styles. Use your CSS framework of choice.
+
 # Coding Rules
 
 - Think before coding. Ask if unclear.
@@ -74,7 +80,7 @@ chore/update-deps
 
 # Pull Requests
 
-PR title: same format as commit subject — `type(scope): short description`
+PR title: same format as commit subject: `type(scope): short description`
 
 PR body:
 ```

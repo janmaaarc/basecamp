@@ -126,6 +126,10 @@ claude plugin install n8n-mcp-skills@n8n-mcp-skills
 # PostgreSQL skills
 claude plugin marketplace add timescale/pg-aiguide
 claude plugin install pg@aiguide
+
+# UI design rules and auditing
+claude plugin marketplace add pbakaus/impeccable
+claude plugin install impeccable@impeccable
 ```
 
 ## How It Works
@@ -180,6 +184,7 @@ For schema migrations, auth changes, major refactors:
 | safety-hooks | Block dangerous commands, scan secrets | [poshan0126/dotclaude](https://github.com/poshan0126/dotclaude) | MIT |
 | n8n-mcp-skills | n8n workflow skills (optional) | [czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) | MIT |
 | pg-aiguide | PostgreSQL skills (optional) | [timescale/pg-aiguide](https://github.com/timescale/pg-aiguide) | Apache 2.0 |
+| impeccable | UI design rules and auditing (optional) | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | MIT |
 
 ## Maintenance
 

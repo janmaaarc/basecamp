@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.3.0 — 2026-06-30
+## v1.3.0: 2026-06-30
 
 ### Added
 - rules/typescript.md, rules/security.md, rules/mobile.md
@@ -14,22 +14,29 @@
 - Fixed em dash in PR title format
 - Fixed empty Open Questions in CONTRACT.md template
 
-## v1.1.0 — 2026-06-29
+## v1.2.0: 2026-06-29
+
+### Added
+- rules/typescript.md, rules/security.md, rules/mobile.md
+- FAQ section in README
+- Star history placeholder in README
+
+## v1.1.0: 2026-06-29
 
 ### Added
 - Conventional commits spec, branch naming, PR format
 - Obsidian screenshots to README
 - MIT LICENSE
 
-## v1.0.0 — 2026-06-29
+## v1.0.0: 2026-06-29
 
 ### Added
-- CLAUDE.md — generic global Claude Code instructions
-- CLAUDE.example.md — filled-in reference example
-- RTK.md — RTK token killer setup
-- rules/karpathy.md — Karpathy coding principles
-- rules/security.md — security rules
-- rules/ai-agents.md, rules/web.md, rules/data.md — stack-specific rules
+- CLAUDE.md: generic global Claude Code instructions
+- CLAUDE.example.md: filled-in reference example
+- RTK.md: RTK token killer setup
+- rules/karpathy.md: Karpathy coding principles
+- rules/security.md: security rules
+- rules/ai-agents.md, rules/web.md, rules/data.md: stack-specific rules
 - Templates/PROJECT.md, Templates/MISTAKES.md, Templates/CONTRACT.md
-- setup.sh — one-command install
+- setup.sh: one-command install
 - GitHub Action: auto-update CHANGELOG on release

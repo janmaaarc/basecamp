@@ -18,7 +18,7 @@ jobs:
           DATE=$(date +%Y-%m-%d)
           NOTES="${{ github.event.release.body }}"
           TEMP=$(mktemp)
-          echo "## $VERSION — $DATE" > "$TEMP"
+          echo "## $VERSION: $DATE" > "$TEMP"
           echo "" >> "$TEMP"
           echo "$NOTES" >> "$TEMP"
           echo "" >> "$TEMP"

@@ -94,9 +94,11 @@ echo '(npx claude-mem start &>/dev/null &)' >> ~/.zshrc
 
 ### 4. Install Claude Code plugins
 
+> `claude plugin` is a command provided by ECC. Install ECC first using the two commands below, then restart Claude Code before installing the rest.
+
 **Core (recommended for everyone):**
 ```bash
-# ECC — agents, skills, hooks
+# ECC — agents, skills, hooks (install this first)
 claude plugin marketplace add affaan-m/ECC
 claude plugin install ecc@ecc
 

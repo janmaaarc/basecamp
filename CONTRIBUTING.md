@@ -18,4 +18,4 @@ Suggestions and improvements welcome.
 
 ## Philosophy
 
-Keep it simple. This repo is for humans and AI agents to read. No code, no build steps, no dependencies. If a change makes CLAUDE.md longer without clear value, it's probably not worth adding.
+Keep it simple. This repo is for humans and AI agents to read. No compiled code, no npm packages, no CI pipelines. If a change makes CLAUDE.md longer without clear value, it's probably not worth adding.

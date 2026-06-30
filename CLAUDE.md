@@ -17,7 +17,7 @@
 
 # Frontend
 <!-- Remove if not building UI -->
-- Run `/impeccable audit` and `/impeccable polish` before shipping any UI.
+- Run `/impeccable audit` and `/impeccable polish` before shipping any UI. (Requires the impeccable plugin — remove this line if not installed.)
 - Use your chosen icon library. No emoji as icons.
 - No inline styles. Use your CSS framework of choice.
 

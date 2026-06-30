@@ -16,7 +16,7 @@ Then open `~/.claude/CLAUDE.md`, fill in your stack, and follow [Setup](#setup) 
 
 ## What This Is
 
-This is the exact setup I use daily. Not a template made for show. A working system built and refined through real projects.
+After building multiple AI and software projects with Claude Code, I found myself repeating the same setup every time. This is that setup, packaged into a reusable foundation: engineering standards, project memory, coding rules, token optimization, and safety mechanisms. Built and refined through real projects, not a template made for show.
 
 Most Claude Code setups are minimal. This one is not. It covers:
 

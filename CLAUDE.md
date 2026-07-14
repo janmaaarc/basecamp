@@ -61,51 +61,13 @@ Commit format: `type(scope): short description`
 - Issue reference: `Closes #123` in footer
 - Revert: `revert: feat(auth): add magic link login` with body `Reverts commit abc123.`
 
-Examples:
-```
-feat(auth): add magic link login
-
-Switches from password auth to magic links for better UX.
-Closes #42
-
-feat(api)!: replace session tokens with JWTs
-
-BREAKING CHANGE: existing sessions invalidated on deploy.
-
-revert: feat(auth): add magic link login
-
-Reverts commit abc123.
-```
-
 Branch naming: `type/short-description-kebab-case`
-
-```
-feat/auth-magic-link
-fix/api-null-response
-chore/update-deps
-```
 
 # Pull Requests
 
 PR title: same format as commit subject: `type(scope): short description`
 
-PR body:
-```
-## What
-One sentence. What changed.
-
-## Why
-One sentence. Why it was needed.
-
-## How
-Bullet points of key implementation decisions, if non-obvious.
-
-## Test plan
-How to verify this works. Steps to reproduce the before/after.
-
-## Notes
-Breaking changes, follow-ups, or anything reviewers should know.
-```
+PR body: sections What / Why / How / Test plan / Notes, one line each.
 
 - Keep PRs small and focused. One feature or fix per PR.
 - Link related issues: `Closes #123`

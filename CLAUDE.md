@@ -1,3 +1,5 @@
+<!-- Maintenance: add rules when a real mistake earns it (see MISTAKES.md), not by polishing in a vacuum. -->
+
 @RTK.md
 @rules/karpathy.md
 

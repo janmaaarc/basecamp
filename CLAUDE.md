@@ -23,13 +23,9 @@
 
 # Coding Rules
 
-- Think before coding. Ask if unclear.
-- Prefer simple over clever.
-- No abstractions for single-use code.
 - Keep files under 800 lines. At 800+, flag it and propose a split by responsibility (e.g. utils, hooks, sub-components) before adding more code. Never exceed 1,000 lines.
 - No external libraries unless nothing installed works.
 - Keep a `.env.example` with every required var (names only, no values). Never commit `.env`.
-- Follow the existing code style. Don't "improve" unrelated code.
 - Comments: one line only. Explain why, not what. Example: `// retry here because Stripe webhooks fire twice on timeout`
 - Markdown files: kebab-case names (e.g. my-notes.md).
 - Watch for obvious bugs proactively.

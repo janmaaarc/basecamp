@@ -1,4 +1,8 @@
-## v1.5.0: 2026-07-21
+## v1.6.0: 2026-07-21
+
+### Added
+- CLAUDE.md, CLAUDE.example.md: Known Tools section documenting code-review-graph as an optional, not-installed-by-default tool
+- README.md: agentshield setup snippet and Tools table row
 
 ### Added
 - CLAUDE.md, CLAUDE.example.md: Security Scans section, run agentshield before editing .claude/ config

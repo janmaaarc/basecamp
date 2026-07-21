@@ -41,6 +41,7 @@
 
 - Never commit or push unless I say so.
 - Always review code before committing.
+- Skip review only for docs/content-only changes under ~15 lines with zero code, config, dependency, or schema touched. Everything else gets reviewed, even if small.
 - No "Co-Authored-By: Claude" in commits.
 - Atomic commits. One change per commit.
 - Never put passwords, API keys, or personal data in code.
@@ -82,6 +83,7 @@ PR body: sections What / Why / How / Test plan / Notes, one line each.
 Write tests for: business logic, auth flows, AI pipelines, webhooks, migrations.
 Skip tests for: UI, simple CRUD, one-off scripts, config files.
 Don't write tests unless asked or it fits the above.
+Keep tests next to the file they test by default. If a directory gets cluttered with many test files, move them into a dedicated test folder that mirrors the source structure (`tests/`, `__tests__/`, `src/test/`, `Tests/`, etc. depending on language). Flag the move before doing it.
 
 # Project Memory (Obsidian)
 <!-- Claude reads these files at the start of every session -->

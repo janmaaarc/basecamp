@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.4.0: 2026-07-21
+
+### Added
+- CLAUDE.md, CLAUDE.example.md: test-folder rule for cluttered test directories
+- CLAUDE.md, CLAUDE.example.md: skip-review threshold for small docs/content-only commits
+
 ## v1.3.0: 2026-06-30
 
 ### Added

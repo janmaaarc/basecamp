@@ -27,6 +27,7 @@ Most Claude Code setups are minimal. This one is not. It covers:
 - Token optimization via RTK and Headroom
 - Safety hooks (block dangerous commands, scan secrets)
 - Persistent memory across sessions via claude-mem
+- Security scanning of `.claude/` config via agentshield
 
 ## Screenshots
 
@@ -183,6 +184,7 @@ For schema migrations, auth changes, major refactors:
 | n8n-mcp-skills | n8n workflow skills (optional) | [czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) | MIT |
 | pg-aiguide | PostgreSQL skills (optional) | [timescale/pg-aiguide](https://github.com/timescale/pg-aiguide) | Apache 2.0 |
 | impeccable | UI design rules and auditing (optional) | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | MIT |
+| agentshield | Scans `.claude/` config for risky permissions, hooks, MCP setups | [affaan-m/agentshield](https://github.com/affaan-m/agentshield) | MIT |
 
 ## Maintenance
 

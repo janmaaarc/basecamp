@@ -101,6 +101,10 @@ At session start, Claude will:
 4. Implement only after I approve.
 5. I verify the result.
 
+# Security Scans
+
+- Before editing `.claude/settings.json`, `.claude/settings.local.json`, hooks, or MCP server config in any project: run `npx ecc-agentshield scan` first if not run recently. Not required for normal coding sessions.
+
 # Writing Style
 
 - No dashes as punctuation. Use periods, commas, or colons.

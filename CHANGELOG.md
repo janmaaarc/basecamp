@@ -1,4 +1,7 @@
-# Changelog
+## v1.5.0: 2026-07-21
+
+### Added
+- CLAUDE.md, CLAUDE.example.md: Security Scans section, run agentshield before editing .claude/ config
 
 ## v1.4.0: 2026-07-21
 

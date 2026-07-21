@@ -114,6 +114,11 @@ At session start, Claude will:
 
 - Before editing `.claude/settings.json`, `.claude/settings.local.json`, hooks, or MCP server config in any project: run `npx ecc-agentshield scan` first if not run recently. Not required for normal coding sessions.
 
+# Known Tools (not installed by default)
+<!-- Optional tools worth knowing about but not part of the default setup. Add your own as you find them. -->
+
+- **code-review-graph** — codebase graph (MCP + CLI) for blast-radius/impact analysis on large or legacy repos: `pip install code-review-graph && code-review-graph install && code-review-graph build`. Only worth setting up once a project is big/tangled enough that "what calls this" means chasing callers across dozens of files. Suggest it when that describes the current project; don't install by default on small/greenfield ones.
+
 # Writing Style
 
 - Never use em dashes (— or --) as punctuation. Use periods, commas, or colons instead.

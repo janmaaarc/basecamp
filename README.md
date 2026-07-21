@@ -93,6 +93,11 @@ npx claude-mem install
 echo '(npx claude-mem start &>/dev/null &)' >> ~/.zshrc
 ```
 
+**agentshield (security scanner, no install needed):**
+```bash
+npx ecc-agentshield scan
+```
+
 ### 4. Install Claude Code plugins
 
 > `claude plugin` is a command provided by ECC. Install ECC first using the two commands below, then restart Claude Code before installing the rest.
@@ -185,6 +190,7 @@ For schema migrations, auth changes, major refactors:
 | pg-aiguide | PostgreSQL skills (optional) | [timescale/pg-aiguide](https://github.com/timescale/pg-aiguide) | Apache 2.0 |
 | impeccable | UI design rules and auditing (optional) | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | MIT |
 | agentshield | Scans `.claude/` config for risky permissions, hooks, MCP setups | [affaan-m/agentshield](https://github.com/affaan-m/agentshield) | MIT |
+| code-review-graph | Codebase graph (MCP + CLI) for blast-radius analysis and token reduction on large-repo reviews (optional) | [tirth8205/code-review-graph](https://github.com/tirth8205/code-review-graph) | MIT |
 
 ## Maintenance
 

@@ -1,4 +1,7 @@
-## v1.6.0: 2026-07-21
+## v1.7.0: 2026-07-22
+
+### Changed
+- CLAUDE.md, CLAUDE.example.md: .env.example rule now allows adding/editing/removing vars freely as code changes, plus a gitignore exception note (!.env.example) for projects with a blanket .env* ignore rule
 
 ### Added
 - CLAUDE.md, CLAUDE.example.md: Known Tools section documenting code-review-graph as an optional, not-installed-by-default tool

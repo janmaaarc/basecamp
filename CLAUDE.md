@@ -27,7 +27,7 @@
 
 - Keep files under 800 lines. At 800+, flag it and propose a split by responsibility (e.g. utils, hooks, sub-components) before adding more code. Never exceed 1,000 lines.
 - No external libraries unless nothing installed works.
-- Keep a `.env.example` with every required var (names only, no values). Never commit `.env`.
+- Keep a `.env.example` with every required var (names only, no values). Add, edit, or remove vars there whenever code changes require it, no need to ask each time. Never commit `.env`. If a project's `.gitignore` has a blanket `.env*` rule, add `!.env.example` so the template itself isn't excluded.
 - Comments: one line only. Explain why, not what. Example: `// retry here because Stripe webhooks fire twice on timeout`
 - Markdown files: kebab-case names (e.g. my-notes.md).
 - Watch for obvious bugs proactively.

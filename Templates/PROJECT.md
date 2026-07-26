@@ -1,9 +1,12 @@
 # Project Name
 
-Related: [[MISTAKES]] | [[CONTRACT]]
+Related: [[MISTAKES]] | [[CONTRACT]] | [[REQUIREMENTS]]
 
 ## What It Is
 <!-- One sentence describing the project -->
+
+## Type
+<!-- landing / app / saas / api / automation — determines which rows of REQUIREMENTS.md apply -->
 
 ## Stack
 <!-- Languages, frameworks, databases, hosting -->

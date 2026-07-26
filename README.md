@@ -23,7 +23,8 @@ Most Claude Code setups are minimal. This one is not. It covers:
 - Global instructions Claude follows on every project
 - Karpathy coding principles (think before coding, surgical changes)
 - Commit, branch, and PR conventions
-- Per-project memory via Obsidian (PROJECT, MISTAKES, CONTRACT files)
+- Per-project memory via Obsidian (PROJECT, MISTAKES, CONTRACT, REQUIREMENTS files)
+- Requirements checklist filtered by project type (landing/app/saas/api/automation)
 - Token optimization via RTK and Headroom
 - Safety hooks (block dangerous commands, scan secrets)
 - Persistent memory across sessions via claude-mem
@@ -146,16 +147,22 @@ Every project gets a folder in your Obsidian vault:
 your-vault/
   Projects/
     my-app/
-      PROJECT.md     <- what the project is, current status
-      MISTAKES.md    <- recurring mistakes to avoid
-      CONTRACT.md    <- plan for high-risk changes
+      PROJECT.md      <- what the project is, current status
+      MISTAKES.md     <- recurring mistakes to avoid
+      CONTRACT.md     <- plan for high-risk changes
+      REQUIREMENTS.md <- checklist of what shipping this project needs
   Templates/
     PROJECT.md
     MISTAKES.md
     CONTRACT.md
+    REQUIREMENTS.md
 ```
 
 Claude reads these at session start automatically. Update `PROJECT.md` at end of each session (max 30 lines, current status only).
+
+### Requirements Checklist
+
+`Templates/REQUIREMENTS.md` is a master checklist (auth, security, SEO, AI/LLM, DevOps, etc.), each row tagged by project type: `landing`, `app`, `saas`, `api`, or `automation` (n8n/no-code workflow delivery). Set `Type` in a project's `PROJECT.md` and Claude generates that project's own filtered `REQUIREMENTS.md`, so a landing page doesn't see auth/billing rows and an n8n automation doesn't see frontend rows. Checked off only once you confirm an item is actually done, not on Claude's own say-so.
 
 ### High-Risk Changes
 

@@ -1,6 +1,6 @@
 # Contract: [Change Title]
 
-Related: [[PROJECT]] | [[MISTAKES]]
+Related: [[PROJECT]] | [[MISTAKES]] | [[REQUIREMENTS]]
 
 > High-risk change. Do not implement until user approves.
 

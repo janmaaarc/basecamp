@@ -94,11 +94,12 @@ Vault path: `~/Documents/your-vault/`
 At session start, Claude will:
 1. Detect the project name from the current folder.
 2. Find or create `your-vault/Projects/<project-name>/`.
-3. Read PROJECT.md, MISTAKES.md, and CONTRACT.md before doing anything.
+3. Read PROJECT.md, MISTAKES.md, CONTRACT.md, and REQUIREMENTS.md before doing anything.
 
 - PROJECT.md — what this project is. Max 30 lines. Overwrite each session, no history.
 - MISTAKES.md — mistakes to avoid. Claude appends to it automatically when corrected. Remove resolved ones.
 - CONTRACT.md — plan for risky changes. Created before implementing. Claude deletes it after the change is implemented and user verifies.
+- REQUIREMENTS.md — per-project checklist filtered from `Templates/REQUIREMENTS.md` by the project's `type` (see that file's header for generation rules). Check at session start, flag unchecked 🔴 High items before calling work "done", mark `- [x]` only on user confirmation, not Claude's own say-so.
 
 # High-Risk Changes
 <!-- Applies to: migrations, auth, major refactors, breaking changes -->
@@ -121,7 +122,7 @@ At session start, Claude will:
 
 # Writing Style
 
-- Never use em dashes (— or --) as punctuation. Use periods, commas, or colons instead.
+- Never use em dashes (— or --) as punctuation in prose. Use periods, commas, or colons instead. `|` is fine for compact separators (legends, key lists, web titles like "Page Name | Site Name").
 - No emojis.
 - No "+" as a conjunction. Use "and" or "&".
 - Direct and concise. No buzzwords.

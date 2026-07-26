@@ -1,4 +1,12 @@
-## v1.7.0: 2026-07-22
+## v1.8.0: 2026-07-26
+
+### Added
+- Templates/REQUIREMENTS.md: master requirements checklist (auth, security, SEO, AI/LLM, DevOps, email deliverability, client handoff) filtered per project by a new Type field (landing/app/saas/api/automation)
+- PROJECT.md: Type field and REQUIREMENTS.md link
+- CLAUDE.md, CLAUDE.example.md: REQUIREMENTS.md added to session-start file reads
+
+### Changed
+- Writing Style: no-em-dash rule now allows | as a compact separator in legends, key lists, and web titles
 
 ### Changed
 - CLAUDE.md, CLAUDE.example.md: .env.example rule now allows adding/editing/removing vars freely as code changes, plus a gitignore exception note (!.env.example) for projects with a blanket .env* ignore rule

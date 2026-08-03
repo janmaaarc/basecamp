@@ -1,3 +1,12 @@
+## v1.8.1: 2026-08-03
+
+### Changed
+- Writing Style: dash ban now explicitly covers en dashes and a lone hyphen used as a sentence pause. Ranges ($100-$200) and compound modifiers (one-handed) stay allowed
+
+### Fixed
+- Release workflow: stop deleting the previous version heading when prepending a new CHANGELOG entry
+- CHANGELOG: restore the missing v1.5.0, v1.6.0, and v1.7.0 sections
+
 ## v1.8.0: 2026-07-26
 
 ### Added

@@ -122,7 +122,7 @@ At session start, Claude will:
 
 # Writing Style
 
-- Never use em dashes (— or --) as punctuation in prose. Use periods, commas, or colons instead. `|` is fine for compact separators (legends, key lists, web titles like "Page Name | Site Name").
+- Never use em dashes (— or --) or en dashes (–) as punctuation in prose. Use periods, commas, or colons instead. `|` is fine for compact separators (legends, key lists, web titles like "Page Name | Site Name"). A single hyphen (`-`) stays fine for ranges ($100-$200) and compound modifiers (one-handed), but not as a stand-in pause/interruption ("I like this - not that") since that's the same banned punctuation in disguise.
 - No emojis.
 - No "+" as a conjunction. Use "and" or "&".
 - Direct and concise. No buzzwords.

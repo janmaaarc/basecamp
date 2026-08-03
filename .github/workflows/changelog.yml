@@ -25,7 +25,7 @@ jobs:
           echo "" >> "$TEMP"
           echo "$NOTES" >> "$TEMP"
           echo "" >> "$TEMP"
-          tail -n +3 CHANGELOG.md >> "$TEMP"
+          cat CHANGELOG.md >> "$TEMP"
           mv "$TEMP" CHANGELOG.md
 
       - name: Commit CHANGELOG

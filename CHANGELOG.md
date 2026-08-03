@@ -8,15 +8,26 @@
 ### Changed
 - Writing Style: no-em-dash rule now allows | as a compact separator in legends, key lists, and web titles
 
+## v1.7.0: 2026-07-22
+
 ### Changed
 - CLAUDE.md, CLAUDE.example.md: .env.example rule now allows adding/editing/removing vars freely as code changes, plus a gitignore exception note (!.env.example) for projects with a blanket .env* ignore rule
+
+## v1.6.0: 2026-07-21
 
 ### Added
 - CLAUDE.md, CLAUDE.example.md: Known Tools section documenting code-review-graph as an optional, not-installed-by-default tool
 - README.md: agentshield setup snippet and Tools table row
+- README.md: agentshield in the feature list
+
+## v1.5.0: 2026-07-21
 
 ### Added
 - CLAUDE.md, CLAUDE.example.md: Security Scans section, run agentshield before editing .claude/ config
+
+### Fixed
+- Release workflow: checkout main instead of a detached HEAD
+- Release workflow: stop interpolating the release body into the shell script
 
 ## v1.4.0: 2026-07-21
 

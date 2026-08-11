@@ -1,3 +1,22 @@
+## v1.9.0: 2026-08-11
+
+### Added
+- CLAUDE.md, CLAUDE.example.md: Done Means Verified expanded (screenshotting is not exercising, a tool's reported success is a claim, run final gates and `git status --porcelain` last)
+- CLAUDE.md, CLAUDE.example.md: Responses and UI Icons sections
+- CLAUDE.md, CLAUDE.example.md: DECISIONS.md and DEBT.md added to project memory, plus a stale-CONTRACT check and PROJECT.md status verification
+- Git Rules: `git add -A <path>` staging trap, merge-conflict dropped-feature check
+- Testing: behavior over implementation, alternate-case check, suite-pollution bisect, one test file per module
+- Error Handling: typed error objects, unhandled promise rejection
+- Coding Rules: pattern-sweep completeness, dependency-file versions, no silent breaking changes, keep files modular
+- rules/typescript.md: never widen a union to bare `string`
+- rules/ai-agents.md: never embed credentials in workflow or agent config
+- RTK.md: hook-proxy note and name-collision warning
+
+### Changed
+- CLAUDE.md now imports `rules/security.md`, which shipped but was never wired up, plus the security-over-simplicity priority line
+- Writing Style mirrors the full rule set: clear language, no exaggeration, accuracy over sounding impressive
+- Kebab-case rule now exempts conventional uppercase docs (README.md, CHANGELOG.md, CLAUDE.md, LICENSE, project memory files)
+
 ## v1.8.1: 2026-08-03
 
 ### Changed

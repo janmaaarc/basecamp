@@ -1,5 +1,7 @@
 # RTK - Rust Token Killer
 
+> For Claude: all shell commands are transparently proxied through RTK via a hook. No action needed, RTK runs automatically in the background.
+
 **Usage**: Token-optimized CLI proxy (60-90% savings on dev operations)
 
 ## Meta Commands (always use rtk directly)
@@ -19,7 +21,10 @@ rtk gain              # Should work (not "command not found")
 which rtk             # Verify correct binary
 ```
 
+**Name collision**: If `rtk gain` fails, you may have reachingforthejack/rtk (Rust Type Kit) installed instead.
+
 ## Hook-Based Usage
 
 All other commands are automatically rewritten by the Claude Code hook.
 Example: `git status` → `rtk git status` (transparent, 0 tokens overhead)
+No additional configuration needed.

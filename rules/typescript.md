@@ -5,5 +5,6 @@
 - Prefer interfaces over type aliases for object shapes.
 - Use Zod for runtime validation at API boundaries and AI outputs.
 - Never cast with `as` to silence type errors. Fix the root type.
+- Never widen a union to bare `string`. It makes comparisons unfalsifiable: a typo'd literal typechecks and matches nothing.
 - Keep types colocated with the code that uses them. No giant `types.ts` files.
 - Use `satisfies` over `as` when you need to check a value matches a type.

@@ -1,3 +1,13 @@
+## v1.10.1: 2026-09-15
+
+### Fixed
+- Corrected which tools support Codex. RTK, claude-mem and pg-aiguide were documented wrong in v1.10.0.
+- RTK supports Codex through `rtk init -g --codex`, which writes instructions into `AGENTS.md` and `RTK.md` rather than patching hooks, so rewriting depends on the agent following them.
+- claude-mem installs for Codex with `npx claude-mem install --ide codex-cli`.
+- pg-aiguide reaches Codex as an MCP server: `codex mcp add --url "https://mcp.tigerdata.com/docs" pg-aiguide`.
+- safety-hooks remains the only tool here with no Codex build, so the README no longer claims there are two exceptions.
+
+
 ## v1.10.0: 2026-09-15
 
 

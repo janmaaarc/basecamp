@@ -142,7 +142,7 @@ claude plugin install impeccable@impeccable
 
 ### 5. Install for Codex (if you use Codex)
 
-Most of these ship a Codex build. See [Switching Between Claude Code and Codex](#switching-between-claude-code-and-codex) for the full list and the two that do not.
+Most of these ship a Codex build. See [Switching Between Claude Code and Codex](#switching-between-claude-code-and-codex) for the full list and the one exception.
 
 ```bash
 # ECC's guided setup configures Claude Code and Codex in one flow
@@ -152,9 +152,14 @@ codex plugin marketplace add DietrichGebert/ponytail
 codex plugin add ponytail@ponytail
 
 npx skills add JuliusBrussee/caveman -a codex
-npx skills add timescale/pg-aiguide
 npx impeccable
+npx claude-mem install --ide codex-cli
+
+# PostgreSQL skills reach Codex as an MCP server
+codex mcp add --url "https://mcp.tigerdata.com/docs" pg-aiguide
 ```
+
+n8n-mcp-skills installs through Codex's own plugin command; its hooks run in the plugin install, not in individual skill uploads.
 
 Then open `/hooks` in Codex and approve the installed hooks.
 
@@ -256,18 +261,26 @@ codex plugin add ponytail@ponytail
 # Caveman
 npx skills add JuliusBrussee/caveman -a codex
 
-# PostgreSQL skills
-npx skills add timescale/pg-aiguide
+# PostgreSQL skills, as an MCP server
+codex mcp add --url "https://mcp.tigerdata.com/docs" pg-aiguide
 
 # Impeccable detects ~/.codex itself
 npx impeccable
+
+# Persistent session memory
+npx claude-mem install --ide codex-cli
+
+# RTK, instructions into AGENTS.md and RTK.md rather than hooks
+rtk init -g --codex
 ```
 
 After installing or updating anything with Codex hooks, open `/hooks` in Codex and approve them. Codex tracks trust per hook definition, so an update that changes a hook needs re-approval.
 
 **Headroom** is provider-level. Codex reads it as an MCP server in `~/.codex/config.toml`, Claude Code via `ANTHROPIC_BASE_URL`.
 
-**Not available on Codex.** safety-hooks ships no Codex build. RTK has hook processors for Claude Code, Cursor, Gemini, Copilot, Droid and Vibe but none for Codex, so its rewriting is manual there. ECC on Codex exposes instructions, skills and a reviewed hook subset, not the full Claude Code agent set, so a Codex session can record that a review happened without running the same reviewer agent.
+**RTK installs for Codex differently.** `rtk init -g --codex` writes instructions into `AGENTS.md` and `RTK.md` rather than patching hooks, so rewriting depends on the agent following them instead of being intercepted before the command runs.
+
+**Not available on Codex.** safety-hooks ships no Codex build. Everything else here installs for both. ECC on Codex exposes instructions, skills and a reviewed hook subset, not the full Claude Code agent set, so a Codex session can record that a review happened without running the same reviewer agent.
 
 ## Tools Used
 
@@ -278,11 +291,11 @@ After installing or updating anything with Codex hooks, open `/hooks` in Codex a
 | ECC | Agents, skills, hooks | Yes, native plugin, reviewed hook subset | [affaan-m/ECC](https://github.com/affaan-m/ECC) | MIT |
 | Ponytail | YAGNI coding rules | Yes | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | MIT |
 | impeccable | UI design rules and auditing (optional) | Yes, detects `~/.codex` | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | MIT |
-| pg-aiguide | PostgreSQL skills (optional) | Yes, via `npx skills` | [timescale/pg-aiguide](https://github.com/timescale/pg-aiguide) | Apache 2.0 |
+| pg-aiguide | PostgreSQL skills (optional) | Yes, as an MCP server | [timescale/pg-aiguide](https://github.com/timescale/pg-aiguide) | Apache 2.0 |
 | n8n-mcp-skills | n8n workflow skills (optional) | Yes, hooks in the plugin install | [czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) | MIT |
-| RTK | Token-optimized CLI proxy | Manual, no Codex hook processor | [rtk-ai/rtk](https://github.com/rtk-ai/rtk) | Apache 2.0 |
+| RTK | Token-optimized CLI proxy | Yes, instruction-driven not hook-driven | [rtk-ai/rtk](https://github.com/rtk-ai/rtk) | Apache 2.0 |
 | safety-hooks | Block dangerous commands, scan secrets | No | [poshan0126/dotclaude](https://github.com/poshan0126/dotclaude) | MIT |
-| claude-mem | Persistent session memory | No | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | Apache 2.0 |
+| claude-mem | Persistent session memory | Yes, `--ide codex-cli` | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | Apache 2.0 |
 | agentshield | Scans `.claude/` config for risky permissions, hooks, MCP setups | [affaan-m/agentshield](https://github.com/affaan-m/agentshield) | MIT |
 | code-review-graph | Codebase graph (MCP + CLI) for blast-radius analysis and token reduction on large-repo reviews (optional) | [tirth8205/code-review-graph](https://github.com/tirth8205/code-review-graph) | MIT |
 

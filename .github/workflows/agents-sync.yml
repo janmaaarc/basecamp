@@ -1,0 +1,33 @@
+name: Check AGENTS.md is in sync
+
+# AGENTS.md is generated from CLAUDE.md, so it goes stale the moment someone edits the rules
+# and forgets to regenerate. Checking it in gives Codex users the rules without running setup;
+# this job is what keeps that copy honest.
+
+on:
+  pull_request:
+    paths:
+      - 'CLAUDE.md'
+      - 'rules/**'
+      - 'RTK.md'
+      - 'AGENTS.md'
+      - 'bin/basecamp-sync-agents'
+  push:
+    branches: [main]
+
+jobs:
+  agents-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Regenerate AGENTS.md and compare
+        run: |
+          bash bin/basecamp-sync-agents ./CLAUDE.md /tmp/AGENTS.expected.md
+          if ! diff -u AGENTS.md /tmp/AGENTS.expected.md; then
+            echo ""
+            echo "AGENTS.md is out of date. Regenerate it with:"
+            echo "  bash bin/basecamp-sync-agents ./CLAUDE.md ./AGENTS.md"
+            exit 1
+          fi
+          echo "AGENTS.md matches CLAUDE.md."

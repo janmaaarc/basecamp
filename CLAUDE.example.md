@@ -131,7 +131,7 @@ At session start, Claude will:
 
 # Security Scans
 
-- Before editing `.claude/settings.json`, `.claude/settings.local.json`, hooks, or MCP server config in any project: run `npx ecc-agentshield scan` first if not run recently. Not required for normal coding sessions.
+- Before editing `.claude/settings.json`, `.claude/settings.local.json`, `~/.codex/config.toml`, hooks, or MCP server config in any project: run `npx ecc-agentshield scan` first if not run recently. Not required for normal coding sessions.
 
 # Known Tools (not installed by default)
 

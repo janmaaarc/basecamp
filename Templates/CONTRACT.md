@@ -19,7 +19,7 @@ Related: [[PROJECT]] | [[MISTAKES]] | [[REQUIREMENTS]]
 <!-- How to undo if something goes wrong -->
 
 ## Open Questions
-<!-- Things Claude needs user to clarify before implementing -->
+<!-- Things the agent needs the user to clarify before implementing -->
 
 1. <!-- Question here -->
 2. <!-- Question here -->

@@ -4,7 +4,7 @@ Suggestions and improvements welcome.
 
 ## What to Contribute
 
-- New rules or sections for CLAUDE.md
+- New rules or sections for `CLAUDE.md` (`AGENTS.md` is generated from it, never edited directly)
 - Better templates for PROJECT, MISTAKES, or CONTRACT
 - Tool recommendations that fit the philosophy
 - Fixes for outdated instructions
@@ -14,8 +14,14 @@ Suggestions and improvements welcome.
 1. Open an issue first to discuss the change.
 2. Fork the repo and create a branch.
 3. Make your changes.
-4. Submit a pull request with a clear description.
+4. If you touched `CLAUDE.md`, `RTK.md` or `rules/`, regenerate `AGENTS.md`. CI fails the PR otherwise, because Codex reads that file and it is generated, not hand-edited.
+
+   ```bash
+   bash bin/basecamp-sync-agents ./CLAUDE.md ./AGENTS.md
+   ```
+
+5. Submit a pull request with a clear description.
 
 ## Philosophy
 
-Keep it simple. This repo is for humans and AI agents to read. No compiled code, no npm packages, no CI pipelines. If a change makes CLAUDE.md longer without clear value, it's probably not worth adding.
+Keep it simple. This repo is for humans and AI agents to read. No compiled code, no npm packages. The only CI checks that the release notes and `AGENTS.md` stay current. If a change makes `CLAUDE.md` longer without clear value, it's probably not worth adding.

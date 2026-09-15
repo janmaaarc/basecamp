@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Records that the staged diff has been reviewed, unblocking the pre-commit gate.
+# Agent-neutral on purpose: Claude Code, Codex, Cursor or a human all call the same command.
+
+set -uo pipefail
+
+GIT_DIR=$(git rev-parse --git-dir 2>/dev/null) || { echo "Not a git repository." >&2; exit 1; }
+
+if git diff --cached --quiet; then
+  echo "Nothing staged. Stage the changes you reviewed, then run this again." >&2
+  exit 1
+fi
+
+# Hash the diff rather than stamping a time, so any later edit re-arms the gate exactly.
+git diff --cached | shasum | cut -d' ' -f1 > "$GIT_DIR/basecamp-review"
+echo "Review recorded for the current staged diff. Any further change re-arms the gate."

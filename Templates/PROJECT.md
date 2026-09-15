@@ -21,4 +21,4 @@ Related: [[MISTAKES]] | [[CONTRACT]] | [[REQUIREMENTS]]
 <!-- What's working, what's in progress, what's blocked -->
 
 ## Codebase Notes
-<!-- Anything Claude needs to know before touching the code -->
+<!-- Anything the agent needs to know before touching the code -->

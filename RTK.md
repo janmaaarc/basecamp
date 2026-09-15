@@ -1,6 +1,6 @@
 # RTK - Rust Token Killer
 
-> For Claude: all shell commands are transparently proxied through RTK via a hook. No action needed, RTK runs automatically in the background.
+> In Claude Code, all shell commands are transparently proxied through RTK via a hook. No action needed, RTK runs automatically in the background. In Codex there is no such hook, so prefix commands with `rtk` yourself.
 
 **Usage**: Token-optimized CLI proxy (60-90% savings on dev operations)
 
@@ -25,6 +25,8 @@ which rtk             # Verify correct binary
 
 ## Hook-Based Usage
 
-All other commands are automatically rewritten by the Claude Code hook.
+All other commands are automatically rewritten by the agent's hook.
+
+RTK ships hook processors for Claude Code, Cursor, Gemini CLI, Copilot, Factory Droid and Mistral Vibe. There is no Codex processor, so **in Codex the rewriting is not automatic**. Call `rtk` yourself (`rtk git status`, `rtk grep ...`), or check what a command would become with `rtk rewrite "git status"`.
 Example: `git status` → `rtk git status` (transparent, 0 tokens overhead)
 No additional configuration needed.

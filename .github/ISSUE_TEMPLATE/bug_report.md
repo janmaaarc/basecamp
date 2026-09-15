@@ -11,5 +11,5 @@ about: Something in the setup is broken or wrong
 
 **Environment:**
 - OS:
-- Claude Code version:
-- Tool affected (RTK / Headroom / claude-mem / plugin):
+- Agent and version (Claude Code / Codex):
+- Tool affected (RTK / Headroom / claude-mem / review gate / plugin):

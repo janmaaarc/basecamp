@@ -1,3 +1,37 @@
+## v1.10.0: 2026-09-15
+
+
+### Added
+- Codex support: `setup.sh` generates `~/.codex/AGENTS.md` and no longer requires Claude Code, accepting either agent
+- `bin/basecamp-sync-agents`: flattens the `@rules/*.md` imports in `CLAUDE.md` into `AGENTS.md`, which Codex cannot resolve on its own
+- `hooks/pre-commit`: opt-in review gate (`setup.sh --with-gate`) installed via `core.hooksPath`, so it applies to Claude Code, Codex, an IDE and a plain terminal alike
+- `bin/basecamp-reviewed`: records a reviewed staged diff, unblocking the gate for any agent
+- `AGENTS.md` checked in, generated from `CLAUDE.md`, so Codex users get the rules on clone without running setup
+- `.github/workflows/agents-sync.yml`: fails a PR when `AGENTS.md` no longer matches `CLAUDE.md`
+- README: "Switching Between Claude Code and Codex" covering what is shared, with per-agent install commands for ECC, ponytail, caveman, pg-aiguide and impeccable
+- README: step 5 of Setup covers installing for Codex
+- RTK.md: notes that RTK has no Codex hook processor, so its rewriting is manual there
+- CLAUDE.md, CLAUDE.example.md: agentshield scan list includes `~/.codex/config.toml`
+- Issue template asks which agent, not just the Claude Code version
+
+### Changed
+- README: described as a setup for Claude Code and Codex rather than Claude Code alone
+- README: Tools table gains a Codex column, replacing the implicit assumption that every tool was Claude Code only
+- README: plugin updates documented as uninstall then install, because `marketplace update` refreshes the cache without switching the active version
+- CLAUDE.md, Templates: wording that named Claude directly now says "the agent"
+
+### Fixed
+- `setup.sh` parses the vault path as the first non-flag argument, so `setup.sh --with-gate` no longer treats the flag as a vault directory. Unknown options now fail instead of being silently ignored.
+- `basecamp-sync-agents` keeps the last line of a file that has no trailing newline, and strips `\r` so a CRLF checkout still resolves `@` imports instead of emitting the raw line
+- The gate installs as `pre-merge-commit` as well as `pre-commit`, because a merge with no conflicts never invokes `pre-commit` and would otherwise land unreviewed
+
+### Notes
+- The gate keys on a hash of the reviewed diff rather than file mtimes, so an edit made in the same second as the review still re-arms it
+- The gate is opt-in because `core.hooksPath` is global and overrides every repository's `.git/hooks`, which would silently disable husky, lefthook or pre-commit
+- `setup.sh` leaves an existing `core.hooksPath` untouched and prints manual install instructions instead of redirecting it
+
+
+
 ## v1.9.0: 2026-08-11
 
 ### Added

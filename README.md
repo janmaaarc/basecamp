@@ -2,7 +2,7 @@
 
 ![License](https://img.shields.io/github/license/janmaaarc/basecamp) ![Release](https://img.shields.io/github/v/release/janmaaarc/basecamp) ![Stars](https://img.shields.io/github/stars/janmaaarc/basecamp?style=social)
 
-A production-ready Claude Code setup. Global CLAUDE.md, coding rules, per-project memory, and token optimization.
+A production-ready setup for Claude Code and Codex. Shared coding rules, per-project memory, an agent-neutral review gate, and token optimization.
 
 ## Quick Start
 
@@ -12,15 +12,17 @@ cd basecamp
 bash setup.sh ~/Documents/your-vault
 ```
 
-Then open `~/.claude/CLAUDE.md`, fill in your stack, and follow [Setup](#setup) for tools and plugins.
+Add `--with-gate` to also install the [review gate](#switching-between-claude-code-and-codex).
+
+Then open `~/.claude/CLAUDE.md`, fill in your stack, and follow [Setup](#setup) for tools and plugins. Codex users get `~/.codex/AGENTS.md` generated from the same file.
 
 ## What This Is
 
 After building multiple AI and software projects with Claude Code, I found myself repeating the same setup every time. This is that setup, packaged into a reusable foundation: engineering standards, project memory, coding rules, token optimization, and safety mechanisms. Built and refined through real projects, not a template made for show.
 
-Most Claude Code setups are minimal. This one is not. It covers:
+Most coding-agent setups are minimal. This one is not. It covers:
 
-- Global instructions Claude follows on every project
+- Global instructions your agent follows on every project, as `CLAUDE.md` and `AGENTS.md`
 - Karpathy coding principles (think before coding, surgical changes)
 - Commit, branch, and PR conventions
 - Per-project memory via Obsidian (PROJECT, MISTAKES, CONTRACT, REQUIREMENTS files)
@@ -28,7 +30,8 @@ Most Claude Code setups are minimal. This one is not. It covers:
 - Token optimization via RTK and Headroom
 - Safety hooks (block dangerous commands, scan secrets)
 - Persistent memory across sessions via claude-mem
-- Security scanning of `.claude/` config via agentshield
+- Security scanning of `.claude/` and `~/.codex/` config via agentshield
+- A review gate in git, so it applies whichever agent you are using
 
 ## Screenshots
 
@@ -47,7 +50,7 @@ Most Claude Code setups are minimal. This one is not. It covers:
 ## Requirements
 
 - macOS (Linux partially supported, Windows not tested)
-- [Claude Code](https://claude.ai/code)
+- [Claude Code](https://claude.ai/code) or [Codex](https://github.com/openai/codex), or both
 - [Obsidian](https://obsidian.md) (free, for per-project memory files)
 - Homebrew (for RTK)
 - Python 3.10+ (for Headroom)
@@ -137,6 +140,32 @@ claude plugin marketplace add pbakaus/impeccable
 claude plugin install impeccable@impeccable
 ```
 
+### 5. Install for Codex (if you use Codex)
+
+Most of these ship a Codex build. See [Switching Between Claude Code and Codex](#switching-between-claude-code-and-codex) for the full list and the two that do not.
+
+```bash
+# ECC's guided setup configures Claude Code and Codex in one flow
+npx ecc-universal install --guided
+
+codex plugin marketplace add DietrichGebert/ponytail
+codex plugin add ponytail@ponytail
+
+npx skills add JuliusBrussee/caveman -a codex
+npx skills add timescale/pg-aiguide
+npx impeccable
+```
+
+Then open `/hooks` in Codex and approve the installed hooks.
+
+Headroom works in Codex as an MCP server. Add to `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.headroom]
+command = "headroom"
+args = ["mcp", "serve"]
+```
+
 ## How It Works
 
 ### Per-Project Memory
@@ -182,36 +211,104 @@ For schema migrations, auth changes, major refactors:
 - **claude-mem**: Injects only relevant past context per session. No full history bloat.
 - **Caveman and Ponytail**: Keeps responses and code minimal.
 
+## Switching Between Claude Code and Codex
+
+Both agents read the same rules and hit the same review gate, so switching mid-project changes the model, not the setup.
+
+**Shared.** `setup.sh` writes `~/.claude/CLAUDE.md` for Claude Code and generates `~/.codex/AGENTS.md` for Codex. Codex cannot resolve the `@rules/*.md` imports that Claude Code expands, so `basecamp-sync-agents` flattens them into one file. Re-run it after editing `CLAUDE.md`:
+
+```bash
+basecamp-sync-agents                  # ~/.claude/CLAUDE.md -> ~/.codex/AGENTS.md
+```
+
+Keeping `AGENTS.md` as a hand-written copy is what this replaces. It drifts the first time you edit the rules and nothing tells you.
+
+This repo checks in a generated `AGENTS.md` so Codex reads the rules straight from a clone. CI fails any PR where it no longer matches `CLAUDE.md`, so edit `CLAUDE.md` and regenerate:
+
+```bash
+bash bin/basecamp-sync-agents ./CLAUDE.md ./AGENTS.md
+```
+
+**The review gate is git-level, not agent-level.** A `pre-commit` hook blocks any commit whose staged diff has not been reviewed. It fires in Claude Code, Codex, an IDE, or a plain terminal, because they all shell out to the same `git`.
+
+It is opt-in, because it installs via `core.hooksPath`, which is global and overrides every repository's `.git/hooks`. Turning it on unasked would silently disable husky, lefthook or pre-commit wherever you use them.
+
+```bash
+bash setup.sh ~/Documents/your-vault --with-gate   # enable it
+basecamp-reviewed                                  # record that you reviewed the staged diff
+SKIP_REVIEW_GATE=1 git commit ...                  # bypass once
+```
+
+The marker stores a hash of the reviewed diff, not a timestamp, so changing anything staged re-arms the gate exactly.
+
+Docs-only diffs under 15 lines skip the gate, matching the Git Rules in `CLAUDE.md`.
+
+**Most plugins ship a Codex build.** Install them per agent:
+
+```bash
+# ECC, native Codex plugin, guided setup covers both agents at once
+npx ecc-universal install --guided
+
+# Ponytail
+codex plugin marketplace add DietrichGebert/ponytail
+codex plugin add ponytail@ponytail
+
+# Caveman
+npx skills add JuliusBrussee/caveman -a codex
+
+# PostgreSQL skills
+npx skills add timescale/pg-aiguide
+
+# Impeccable detects ~/.codex itself
+npx impeccable
+```
+
+After installing or updating anything with Codex hooks, open `/hooks` in Codex and approve them. Codex tracks trust per hook definition, so an update that changes a hook needs re-approval.
+
+**Headroom** is provider-level. Codex reads it as an MCP server in `~/.codex/config.toml`, Claude Code via `ANTHROPIC_BASE_URL`.
+
+**Not available on Codex.** safety-hooks ships no Codex build. RTK has hook processors for Claude Code, Cursor, Gemini, Copilot, Droid and Vibe but none for Codex, so its rewriting is manual there. ECC on Codex exposes instructions, skills and a reviewed hook subset, not the full Claude Code agent set, so a Codex session can record that a review happened without running the same reviewer agent.
+
 ## Tools Used
 
-| Tool | Purpose | Repo | License |
-|------|---------|------|---------|
-| RTK | Token-optimized CLI proxy | [rtk-ai/rtk](https://github.com/rtk-ai/rtk) | Apache 2.0 |
-| Headroom | Context compression proxy | [headroomlabs-ai/headroom](https://github.com/headroomlabs-ai/headroom) | Apache 2.0 |
-| ECC | Agents, skills, hooks | [affaan-m/ECC](https://github.com/affaan-m/ECC) | MIT |
-| Caveman | Terse response mode | [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) | MIT |
-| Ponytail | YAGNI coding rules | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | MIT |
-| claude-mem | Persistent session memory | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | Apache 2.0 |
-| safety-hooks | Block dangerous commands, scan secrets | [poshan0126/dotclaude](https://github.com/poshan0126/dotclaude) | MIT |
-| n8n-mcp-skills | n8n workflow skills (optional) | [czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) | MIT |
-| pg-aiguide | PostgreSQL skills (optional) | [timescale/pg-aiguide](https://github.com/timescale/pg-aiguide) | Apache 2.0 |
-| impeccable | UI design rules and auditing (optional) | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | MIT |
+| Tool | Purpose | Codex | Repo | License |
+|------|---------|-------|------|---------|
+| Headroom | Context compression proxy | Yes, as an MCP server | [headroomlabs-ai/headroom](https://github.com/headroomlabs-ai/headroom) | Apache 2.0 |
+| Caveman | Terse response mode | Yes | [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) | MIT |
+| ECC | Agents, skills, hooks | Yes, native plugin, reviewed hook subset | [affaan-m/ECC](https://github.com/affaan-m/ECC) | MIT |
+| Ponytail | YAGNI coding rules | Yes | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | MIT |
+| impeccable | UI design rules and auditing (optional) | Yes, detects `~/.codex` | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | MIT |
+| pg-aiguide | PostgreSQL skills (optional) | Yes, via `npx skills` | [timescale/pg-aiguide](https://github.com/timescale/pg-aiguide) | Apache 2.0 |
+| n8n-mcp-skills | n8n workflow skills (optional) | Yes, hooks in the plugin install | [czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) | MIT |
+| RTK | Token-optimized CLI proxy | Manual, no Codex hook processor | [rtk-ai/rtk](https://github.com/rtk-ai/rtk) | Apache 2.0 |
+| safety-hooks | Block dangerous commands, scan secrets | No | [poshan0126/dotclaude](https://github.com/poshan0126/dotclaude) | MIT |
+| claude-mem | Persistent session memory | No | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | Apache 2.0 |
 | agentshield | Scans `.claude/` config for risky permissions, hooks, MCP setups | [affaan-m/agentshield](https://github.com/affaan-m/agentshield) | MIT |
 | code-review-graph | Codebase graph (MCP + CLI) for blast-radius analysis and token reduction on large-repo reviews (optional) | [tirth8205/code-review-graph](https://github.com/tirth8205/code-review-graph) | MIT |
 
 ## Maintenance
 
 ```bash
-# Update plugins
-claude plugin marketplace update ecc
-claude plugin marketplace update caveman
-claude plugin marketplace update ponytail
-claude plugin marketplace update dotclaude
+# Update a plugin. `marketplace update` only refreshes the cache: installed_plugins.json
+# keeps pointing at the old version, and `install` no-ops with "already installed".
+# Uninstalling first is what actually switches the active version.
+for p in ecc caveman ponytail; do
+  claude plugin marketplace update "$p"
+  claude plugin uninstall "$p@$p" && claude plugin install "$p@$p"
+done
+
+# Regenerate AGENTS.md after editing ~/.claude/CLAUDE.md, so Codex sees the same rules
+basecamp-sync-agents
 
 # Update tools
 brew upgrade rtk
 headroom update
-npx claude-mem update
+```
+
+Check what is actually active rather than trusting the install output:
+
+```bash
+claude plugin list
 ```
 
 ## FAQ

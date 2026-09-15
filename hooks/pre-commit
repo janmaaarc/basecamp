@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Blocks a commit until the staged diff has been reviewed, in any agent or none.
+#
+# Claude Code, Codex, Cursor and a plain terminal all run git the same way, so the gate lives
+# in git rather than in one agent's hook system. Record a review with:
+#
+#   basecamp-reviewed
+#
+# The marker stores a hash of the reviewed diff, not a timestamp, so changing anything staged
+# re-arms the gate exactly. An mtime comparison missed edits made in the same second.
+#
+# Bypass once with: SKIP_REVIEW_GATE=1 git commit ...
+
+set -uo pipefail
+
+[ "${SKIP_REVIEW_GATE:-0}" = "1" ] && exit 0
+
+GIT_DIR=$(git rev-parse --git-dir 2>/dev/null) || exit 0
+MARKER="$GIT_DIR/basecamp-review"
+
+FILES=$(git diff --cached --name-only)
+[ -n "$FILES" ] || exit 0
+
+# Docs-only changes under 15 lines skip review, matching the Git Rules in CLAUDE.md.
+NON_DOC=$(printf '%s\n' "$FILES" | grep -vE '\.(md|txt)$' | head -1)
+LINES=$(git diff --cached --numstat | awk 'NF{a+=$1;d+=$2} END{print a+d+0}')
+if [ -z "$NON_DOC" ] && [ "${LINES:-0}" -lt 15 ]; then
+  exit 0
+fi
+
+CURRENT=$(git diff --cached | shasum | cut -d' ' -f1)
+REVIEWED=$(cat "$MARKER" 2>/dev/null || true)
+
+[ "$CURRENT" = "$REVIEWED" ] && exit 0
+
+if [ -z "$REVIEWED" ]; then
+  echo "Blocked: no code review recorded for this repo." >&2
+else
+  echo "Blocked: the staged diff changed since it was reviewed." >&2
+fi
+
+cat >&2 <<'EOF'
+
+Review the staged diff, then record it:
+  basecamp-reviewed
+
+Bypass once (use sparingly):
+  SKIP_REVIEW_GATE=1 git commit ...
+EOF
+exit 1

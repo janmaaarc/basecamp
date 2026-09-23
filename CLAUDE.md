@@ -51,6 +51,7 @@
 - Never commit or push unless I say so.
 - Always review code before committing.
 - Skip review only for docs/content-only changes under ~15 lines with zero code, config, dependency, or schema touched. Everything else gets reviewed, even if small.
+- After fixing findings, resume the same reviewer instead of spawning a fresh one. It still holds its last pass, so scope the re-check to those findings and what the edits could have broken. Ask for a full re-sweep only on the final pass of a large or security-touching diff.
 - No "Co-Authored-By: Claude" in commits.
 - Atomic commits. One change per commit.
 - Never put passwords, API keys, or personal data in code.

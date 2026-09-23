@@ -55,7 +55,7 @@
 - No "Co-Authored-By: Claude" in commits.
 - Atomic commits. One change per commit.
 - Never put passwords, API keys, or personal data in code.
-- No WIP commits on main. Use a branch.
+- No WIP commits on main. A single finished change commits straight to main, no branch and no PR. Branch only for work that lands over several commits, or when you want review before it hits main.
 - Squash before merging. Keep history clean.
 - After staging broadly for review, `git reset` before staging each logical commit. `git add -A <path>` does not limit the index to `<path>`.
 - After a merge conflict, diff against the branch you merged from. An unused import surviving resolution usually means a dropped feature, not just a lint warning.

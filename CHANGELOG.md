@@ -1,3 +1,19 @@
+## v1.11.0: 2026-09-23
+
+### Fixed
+- `setup.sh` no longer overwrites `CLAUDE.md`, `RTK.md`, `rules/` or the vault templates when your copy differs from this repo's. A re-run used to destroy customized rules silently. Use `--force` to take this repo's copies, which saves the old ones as `.bak` first.
+- The vault placeholder is substituted before the comparison, so a clean install no longer reports itself as customized on every later run.
+- Fails loudly when a destination already exists as a directory, instead of copying the file inside it and leaving the real target missing.
+
+### Added
+- `--force` flag on `setup.sh`.
+
+### Changed
+- Git Rules: resume the same reviewer after fixing findings rather than spawning a fresh one, and scope the re-check to those findings.
+- Git Rules: a single finished change commits straight to main. Branch only for multi-commit work or when you want review first.
+
+`bin/` commands and the git hooks still overwrite unconditionally. They are program code, and a re-run is how fixes reach them.
+
 ## v1.10.1: 2026-09-15
 
 ### Fixed

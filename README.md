@@ -14,6 +14,10 @@ bash setup.sh ~/Documents/your-vault
 
 Add `--with-gate` to also install the [review gate](#switching-between-claude-code-and-codex).
 
+Re-running `setup.sh` keeps your edits to `CLAUDE.md`, `RTK.md`, `rules/` and the vault templates. If your copy differs from this repo's, it says so and leaves yours alone. Add `--force` to take this repo's copies instead, which saves the old ones as `.bak` first.
+
+The commands in `bin/` and the git hooks always get overwritten, since those are program code and a re-run is how you pick up fixes.
+
 Then open `~/.claude/CLAUDE.md`, fill in your stack, and follow [Setup](#setup) for tools and plugins. Codex users get `~/.codex/AGENTS.md` generated from the same file.
 
 ## What This Is

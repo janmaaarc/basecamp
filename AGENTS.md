@@ -39,13 +39,15 @@ No additional configuration needed.
 
 Behavioral guidelines to reduce common LLM coding mistakes.
 
+**Tradeoff:** These guidelines bias toward caution over speed. For trivial tasks, use judgment.
+
 ## 1. Think Before Coding
 
 **Don't assume. Don't hide confusion. Surface tradeoffs.**
 
 Before implementing:
 - State your assumptions explicitly. If uncertain, ask.
-- If multiple interpretations exist, present them — don't pick silently.
+- If multiple interpretations exist, present them rather than picking silently.
 - If a simpler approach exists, say so. Push back when warranted.
 - If something is unclear, stop. Name what's confusing. Ask.
 
@@ -69,7 +71,7 @@ When editing existing code:
 - Don't "improve" adjacent code, comments, or formatting.
 - Don't refactor things that aren't broken.
 - Match existing style, even if you'd do it differently.
-- If you notice unrelated dead code, mention it — don't delete it.
+- If you notice unrelated dead code, mention it rather than deleting it.
 
 When your changes create orphans:
 - Remove imports/variables/functions that YOUR changes made unused.
@@ -94,6 +96,10 @@ For multi-step tasks, state a brief plan:
 ```
 
 Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
+
+---
+
+**These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
 
 # Security Rules
 
@@ -220,11 +226,11 @@ At session start, Claude will:
 2. Find or create `your-vault/Projects/<project-name>/`.
 3. Read PROJECT.md, MISTAKES.md, CONTRACT.md, DECISIONS.md, DEBT.md, and REQUIREMENTS.md before doing anything.
 
-- PROJECT.md — what this project is. Max 30 lines. Overwrite each session, no history. Verify status claims (test counts, branch state) against the repo, don't carry forward assumptions from earlier in the conversation.
+- PROJECT.md: what this project is. Max 30 lines. Overwrite each session, no history. Verify status claims (test counts, branch state) against the repo, don't carry forward assumptions from earlier in the conversation.
 - MISTAKES.md: mistakes to avoid. Append to it automatically when corrected. Remove resolved ones.
 - CONTRACT.md: plan for risky changes. Created before implementing, deleted after the change is implemented and the user verifies it. If one already exists at session start, check whether its change already landed (`git log`) before treating it as open.
-- DECISIONS.md — durable "why we chose X over Y" calls that would otherwise be lost when PROJECT.md gets overwritten. Append, don't overwrite.
-- DEBT.md — known gaps, consciously deferred, not yet mistakes. Append, don't overwrite. Close an item by moving it to a "Closed" section with the outcome, don't delete it outright.
+- DECISIONS.md: durable "why we chose X over Y" calls that would otherwise be lost when PROJECT.md gets overwritten. Append, don't overwrite.
+- DEBT.md: known gaps, consciously deferred, not yet mistakes. Append, don't overwrite. Close an item by moving it to a "Closed" section with the outcome, don't delete it outright.
 - REQUIREMENTS.md: per-project checklist filtered from `Templates/REQUIREMENTS.md` by the project's `type` (see that file's header for generation rules). Check at session start, flag unchecked 🔴 High items before calling work "done", mark `- [x]` only on user confirmation, not your own say-so.
 
 # High-Risk Changes
@@ -237,14 +243,15 @@ At session start, Claude will:
 5. I verify the result.
 
 # Security Scans
-<!-- Requires the agentshield tool (npx ecc-agentshield) — remove this line if not using it. -->
+<!-- Requires the agentshield tool (npx ecc-agentshield). Remove this line if not using it. -->
 
 - Before editing `.claude/settings.json`, `.claude/settings.local.json`, `~/.codex/config.toml`, hooks, or MCP server config in any project: run `npx ecc-agentshield scan` first if not run recently. Not required for normal coding sessions.
+- A nonzero exit is not automatically a crash. agentshield returns nonzero for policy violations too, so read the output before deciding. A findings report means stop and fix the findings. Proceed only when the output is an uncaught stack trace with no report, and name the error when you do. Stop and ask for any other nonzero exit, for a report followed by a crash, or when the crash points at the file you are about to edit. Never report any of these as a pass.
 
 # Known Tools (not installed by default)
 <!-- Optional tools worth knowing about but not part of the default setup. Add your own as you find them. -->
 
-- **code-review-graph** — codebase graph (MCP + CLI) for blast-radius/impact analysis on large or legacy repos: `pip install code-review-graph && code-review-graph install && code-review-graph build`. Only worth setting up once a project is big/tangled enough that "what calls this" means chasing callers across dozens of files. Suggest it when that describes the current project; don't install by default on small/greenfield ones.
+- **code-review-graph**: codebase graph (MCP + CLI) for blast-radius/impact analysis on large or legacy repos: `pip install code-review-graph && code-review-graph install && code-review-graph build`. Only worth setting up once a project is big/tangled enough that "what calls this" means chasing callers across dozens of files. Suggest it when that describes the current project; don't install by default on small/greenfield ones.
 
 # Responses
 

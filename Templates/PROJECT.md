@@ -6,7 +6,7 @@ Related: [[MISTAKES]] | [[CONTRACT]] | [[REQUIREMENTS]]
 <!-- One sentence describing the project -->
 
 ## Type
-<!-- landing / app / saas / api / automation — determines which rows of REQUIREMENTS.md apply -->
+<!-- landing / app / saas / api / automation. Determines which rows of REQUIREMENTS.md apply -->
 
 ## Stack
 <!-- Languages, frameworks, databases, hosting -->

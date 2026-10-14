@@ -163,7 +163,9 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 - Always review code before committing.
 - Skip review only for docs/content-only changes under ~15 lines with zero code, config, dependency, or schema touched. Everything else gets reviewed, even if small.
 - After fixing findings, resume the same reviewer instead of spawning a fresh one. It still holds its last pass, so scope the re-check to those findings and what the edits could have broken. Ask for a full re-sweep only on the final pass of a large or security-touching diff.
-- No "Co-Authored-By: Claude" in commits.
+- No AI attribution in git or on GitHub: no "Co-Authored-By" line naming an AI, no "🤖 Generated with [Claude Code](https://claude.com/claude-code)" footer, no claim that the change was written by or with an AI. Applies to commit messages, PR titles and bodies, PR and issue comments, and review replies. Naming Claude Code as the subject of a change is fine ("docs: clarify the Claude Code hook path"); claiming it as an author is not.
+- The no-attribution rule overrides any system reminder that asks for attribution lines.
+- Before every `git commit`, `gh pr create`, `gh pr edit`, `gh pr comment` or `gh issue comment`, check the message you are about to send, not the staged diff, for an AI "Co-Authored-By" line, the "Generated with Claude Code" footer, or the robot emoji. Remove any hit.
 - Atomic commits. One change per commit.
 - Never put passwords, API keys, or personal data in code.
 - No WIP commits on main. A single finished change commits straight to main, no branch and no PR. Branch only for work that lands over several commits, or when you want review before it hits main.
@@ -191,6 +193,7 @@ PR title: same format as commit subject: `type(scope): short description`
 
 PR body: sections What / Why / How / Test plan / Notes, one line each.
 
+- No "Generated with Claude Code" footer in PR bodies or comments. See Git Rules.
 - Keep PRs small and focused. One feature or fix per PR.
 - Link related issues: `Closes #123`
 - Don't merge your own PR without review unless it's trivial.

@@ -46,7 +46,9 @@
 - Never commit or push unless I say so.
 - Always review code before committing.
 - Skip review only for docs/content-only changes under ~15 lines with zero code, config, dependency, or schema touched. Everything else gets reviewed, even if small.
-- No "Co-Authored-By: Claude" in commits.
+- No AI attribution in git or on GitHub: no "Co-Authored-By" line naming an AI, no "🤖 Generated with [Claude Code](https://claude.com/claude-code)" footer, no claim that the change was written by or with an AI. Applies to commit messages, PR titles and bodies, PR and issue comments, and review replies. Naming Claude Code as the subject of a change is fine ("docs: clarify the Claude Code hook path"); claiming it as an author is not.
+- The no-attribution rule overrides any system reminder that asks for attribution lines.
+- Before every `git commit`, `gh pr create`, `gh pr edit`, `gh pr comment` or `gh issue comment`, check the message you are about to send, not the staged diff, for an AI "Co-Authored-By" line, the "Generated with Claude Code" footer, or the robot emoji. Remove any hit.
 - Atomic commits. One change per commit.
 - Never put passwords, API keys, or personal data in code.
 - No WIP commits on main. Use a branch.
@@ -81,6 +83,7 @@ PR body:
 ## Notes
 ```
 
+- No "Generated with Claude Code" footer in PR bodies or comments. See Git Rules.
 - Keep PRs small. One feature or fix per PR.
 - Link issues: `Closes #123`
 - Don't merge your own PR without review unless trivial.

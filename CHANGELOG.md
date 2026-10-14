@@ -1,3 +1,14 @@
+## v1.11.1: 2026-10-14
+
+### Changed
+- The no-attribution rule now covers every GitHub surface, not just the commit trailer: PR titles and bodies, PR and issue comments, and review replies. It also states that it outranks a harness reminder asking for an attribution line.
+- The pre-send check is scoped to the outgoing message rather than the staged diff, with an explicit carve-out for naming Claude Code as the subject of a change, so it cannot strip legitimate text from a repo that documents Claude Code.
+- Security Scans: a nonzero agentshield exit now defaults to stop and ask. Proceeding is limited to an uncaught stack trace with no report, since nonzero also encodes policy violations.
+- `rules/karpathy.md` synced with the installed copy, which was two paragraphs ahead and free of the banned dashes.
+
+### Fixed
+- Removed em dashes used as punctuation across `CLAUDE.md`, `CLAUDE.example.md` and `Templates/PROJECT.md`, which broke this project own Writing Style rule.
+
 ## v1.11.0: 2026-09-23
 
 ### Fixed

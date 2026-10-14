@@ -7,7 +7,7 @@
 - `rules/karpathy.md` synced with the installed copy, which was two paragraphs ahead and free of the banned dashes.
 
 ### Fixed
-- Removed em dashes used as punctuation across `CLAUDE.md`, `CLAUDE.example.md` and `Templates/PROJECT.md`, which broke this project own Writing Style rule.
+- Removed em dashes used as punctuation across `CLAUDE.md`, `CLAUDE.example.md` and `Templates/PROJECT.md`, which broke this project's own Writing Style rule.
 
 ## v1.11.0: 2026-09-23
 

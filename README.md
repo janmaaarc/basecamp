@@ -36,6 +36,7 @@ Most coding-agent setups are minimal. This one is not. It covers:
 - Persistent memory across sessions via claude-mem
 - Security scanning of `.claude/` and `~/.codex/` config via agentshield
 - A review gate in git, so it applies whichever agent you are using
+- Optional Claude Code hooks that enforce "done means verified", auto-format edits, and log which skills and rules actually load
 
 ## Screenshots
 
@@ -75,6 +76,7 @@ mkdir -p ~/.claude/rules
 cp CLAUDE.md ~/.claude/CLAUDE.md
 cp RTK.md ~/.claude/RTK.md
 cp -r rules/ ~/.claude/rules/
+mkdir -p ~/.claude/scripts && cp scripts/*.sh ~/.claude/scripts/
 cp -r Templates/ ~/Documents/your-vault/Templates/
 ```
 
@@ -174,6 +176,38 @@ Headroom works in Codex as an MCP server. Add to `~/.codex/config.toml`:
 command = "headroom"
 args = ["mcp", "serve"]
 ```
+
+### 6. Claude Code hooks (optional)
+
+`setup.sh` copies these to `~/.claude/scripts/`. They do nothing until registered in `~/.claude/settings.json`, which setup never edits. Each one needs `jq` and fails open, so a broken script never wedges a session.
+
+| Script | Event | What it does |
+|--------|-------|--------------|
+| `verify-before-done.sh` | Stop | Blocks the end of a turn that edited code when no typecheck, lint, build or test ran after the last edit. Edits to Markdown, `~/.claude` and `/tmp` don't count. Spotting a gate command is a heuristic, so an unusual invocation may draw one extra nudge. It nudges once, then lets the stop through, so a repo with no gates cannot loop. |
+| `auto-format.sh` | PostToolUse | Formats each edited file with the project's local prettier or eslint (from `node_modules/.bin`), or ruff on your PATH, and only when the project has that tool's config. Never installs anything. `eslint --fix` applies the project's own autofixes, so a rule like unused-imports can remove an import Claude has not used yet. |
+| `log-skill-usage.sh` | PreToolUse, UserPromptSubmit | Appends every Skill call and typed `/command` to `~/.claude/state/skill-usage.tsv`. After a couple of weeks, turn off skills that never fire with `skillOverrides`, so the rest trigger reliably. |
+| `log-instructions-loaded.sh` | InstructionsLoaded | Logs each `CLAUDE.md` and rules file that loads, and why, to `~/.claude/state/instructions-loaded.jsonl`. Rows with `path_glob_match` prove the `paths:` rules fire. |
+| `statusline.sh` | status line | Shows the Ponytail and Caveman badges plus 5-hour and 7-day usage and effort level when Claude Code supplies them. Plugin paths resolve at run time, so plugin updates don't blank it. |
+
+Back up, then merge the hooks into your settings without touching existing ones. Re-running it adds nothing twice, and a failed `jq` leaves your settings as they were:
+
+```bash
+f=~/.claude/settings.json
+[ -f "$f" ] || echo '{}' > "$f"
+cp -n "$f" "$f.bak.$(date +%Y%m%d%H%M%S)"
+jq --arg d "$HOME/.claude/scripts" '
+  def run(s): "bash \"\($d)/\(s)\"";
+  def add(e; entry): if any(.hooks[e][]?.hooks[]?; .command == entry.hooks[0].command) then . else .hooks[e] = ((.hooks[e] // []) + [entry]) end;
+  add("Stop"; {hooks: [{type: "command", command: run("verify-before-done.sh"), timeout: 15}]})
+  | add("PostToolUse"; {matcher: "Edit|Write|MultiEdit", hooks: [{type: "command", command: run("auto-format.sh"), timeout: 30}]})
+  | add("PreToolUse"; {matcher: "Skill", hooks: [{type: "command", command: run("log-skill-usage.sh"), timeout: 5}]})
+  | add("UserPromptSubmit"; {hooks: [{type: "command", command: run("log-skill-usage.sh"), timeout: 5}]})
+  | add("InstructionsLoaded"; {hooks: [{type: "command", command: run("log-instructions-loaded.sh"), timeout: 5}]})
+  | .statusLine = {type: "command", command: run("statusline.sh")}
+' "$f" > "$f.tmp" && cat "$f.tmp" > "$f"; rm -f "$f.tmp"
+```
+
+Drop any line you don't want. The last line replaces an existing status line. Hook changes apply from the next session.
 
 ## How It Works
 

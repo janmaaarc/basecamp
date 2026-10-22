@@ -91,6 +91,12 @@ mkdir -p "$BIN"
 cp bin/basecamp-reviewed bin/basecamp-sync-agents "$BIN/"
 chmod +x "$BIN/basecamp-reviewed" "$BIN/basecamp-sync-agents"
 
+# Claude Code hook scripts are program code too, so they overwrite. They stay inert until
+# registered in settings.json, which this script never edits: see README "Claude Code hooks".
+mkdir -p ~/.claude/scripts
+cp scripts/*.sh ~/.claude/scripts/
+chmod +x ~/.claude/scripts/*.sh
+
 # Codex reads AGENTS.md and cannot resolve CLAUDE.md's @imports, so generate a flattened copy.
 # Only when Codex is actually present, so a Claude-only install does not grow a stray ~/.codex.
 if command -v codex &>/dev/null || [ -d "$HOME/.codex" ]; then
@@ -128,3 +134,4 @@ echo "  1. Open ~/.claude/CLAUDE.md and fill in your stack and defaults."
 echo "  2. Re-run basecamp-sync-agents after editing it, so Codex sees the same rules."
 echo "  3. Add $BIN to PATH if it is not already there."
 echo "  4. Follow README.md to install RTK, Headroom, and agent plugins."
+echo "  5. Optional: register the hooks in ~/.claude/scripts via README \"Claude Code hooks\"."

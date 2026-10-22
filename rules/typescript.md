@@ -1,3 +1,12 @@
+---
+paths:
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "**/*.mts"
+  - "**/*.cts"
+  - "**/tsconfig*.json"
+---
+
 # TypeScript Rules
 
 - Always strict mode (`strict: true` in tsconfig).

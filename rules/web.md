@@ -1,3 +1,16 @@
+---
+paths:
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "**/*.js"
+  - "**/*.jsx"
+  - "**/*.mjs"
+  - "**/*.html"
+  - "**/*.vue"
+  - "**/*.svelte"
+  - "**/*.astro"
+---
+
 # Web Development Rules
 
 - Validate all user inputs at the API boundary.

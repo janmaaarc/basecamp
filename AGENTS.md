@@ -277,3 +277,60 @@ At session start, Claude will:
 - Use one icon library consistently, the one set in Your Defaults.
 - No emoji as icons, no mixing icon libraries unless the project specifies.
 - Never add border highlights on UI borders.
+
+# AI & Automation Rules
+
+- Minimize API calls. Batch where possible.
+- Design for idempotency. Same input = same result.
+- Add retries with exponential backoff on transient errors.
+- Always validate AI output structure before using it.
+- Never trust raw LLM output. Parse and validate every field.
+- Prefer structured outputs (JSON schema) over free text.
+- Log meaningful errors with context, not just "AI call failed".
+- Never embed credentials directly in workflow or agent config. Use the platform's credential store by reference only.
+- Ground responses in available data. Avoid hallucination by limiting scope.
+
+# Data & Database Rules
+
+- Never run destructive queries (DROP, DELETE, TRUNCATE) without a backup plan.
+- Always test migrations on a copy before running on production.
+- Index foreign keys and frequently filtered columns.
+- Use transactions for multi-step writes.
+- Validate data types and constraints at the schema level, not just app level.
+- Never store passwords in plain text. Always hash.
+- Log schema changes with timestamps and author.
+
+
+# Mobile Development Rules (React Native / Flutter)
+
+- Never block the main thread. Move heavy work to background isolates or workers.
+- Handle offline state explicitly. Assume the network can fail at any time.
+- Use platform-specific APIs only when necessary. Prefer cross-platform abstractions.
+- Never hardcode screen dimensions. Use responsive layouts.
+- Test on both iOS and Android before marking anything done.
+- Request permissions at the point of need, not on app launch.
+- Never store sensitive data in AsyncStorage or SharedPreferences unencrypted.
+- Handle app lifecycle events (background, foreground, kill) explicitly.
+
+
+# TypeScript Rules
+
+- Always strict mode (`strict: true` in tsconfig).
+- Never use `any`. Use `unknown` and narrow types explicitly.
+- Prefer interfaces over type aliases for object shapes.
+- Use Zod for runtime validation at API boundaries and AI outputs.
+- Never cast with `as` to silence type errors. Fix the root type.
+- Never widen a union to bare `string`. It makes comparisons unfalsifiable: a typo'd literal typechecks and matches nothing.
+- Keep types colocated with the code that uses them. No giant `types.ts` files.
+- Use `satisfies` over `as` when you need to check a value matches a type.
+
+
+# Web Development Rules
+
+- Validate all user inputs at the API boundary.
+- Never expose secrets or service keys client-side.
+- Use environment variables for all config. No hardcoded values.
+- Sanitize outputs to prevent XSS.
+- Use parameterized queries. No string-concatenated SQL.
+- Auth-gate every route that touches user data.
+- Return consistent error shapes. Never leak stack traces to clients.

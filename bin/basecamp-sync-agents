@@ -36,6 +36,16 @@ mkdir -p "$(dirname "$OUT")"
       *) printf '%s\n' "$line" ;;
     esac
   done < "$SRC"
+  # Codex has no `paths:` support, so path-scoped rules that CLAUDE.md does not @import get inlined with frontmatter stripped.
+  # Read once into a variable because a `tr | grep -q` pipe under pipefail can report SIGPIPE when grep exits early.
+  SRC_LINES=$(tr -d '\r' < "$SRC")
+  for rule in "$(dirname "$SRC")"/rules/*.md; do
+    [ -f "$rule" ] || continue
+    grep -qxF "@rules/$(basename "$rule")" <<< "$SRC_LINES" && continue
+    echo
+    # Buffers a leading frontmatter block and prints it back if no closing --- ever arrives, so a stray first line can't swallow the rule.
+    tr -d '\r' < "$rule" | awk 'NR==1 && /^---$/ {fm=1; buf=$0 ORS; next} fm {if (/^---$/) {fm=0; buf=""} else buf = buf $0 ORS; next} {print} END {if (fm) printf "%s", buf}'
+  done
 } > "$OUT"
 
 echo "Wrote $OUT ($(grep -c '' "$OUT") lines) from ${SRC/#$HOME/~}."

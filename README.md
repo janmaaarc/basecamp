@@ -82,7 +82,7 @@ cp -r Templates/ ~/Documents/your-vault/Templates/
 
 - Open `~/.claude/CLAUDE.md` and fill in your stack, vault path, and defaults
 - See `CLAUDE.example.md` for a filled-in reference
-- Optional: import stack-specific rules with `@rules/typescript.md`, `@rules/security.md`, `@rules/web.md`, `@rules/ai-agents.md`, `@rules/data.md`, or `@rules/mobile.md`
+- Stack rules in `~/.claude/rules/` load on their own. `typescript.md`, `web.md` and `mobile.md` carry `paths:` frontmatter, so Claude loads each one only when it touches a matching file. `karpathy.md`, `security.md`, `ai-agents.md` and `data.md` load every session. Delete any rule file you don't need. Don't `@`-import the path-scoped ones: an import loads the file every session, which defeats `paths:`.
 
 ### 3. Install tools
 
@@ -348,7 +348,7 @@ No. Install what fits your workflow. ECC is the most useful. Caveman and Ponytai
 
 ### Can I use this with my stack?
 
-Yes. Fill in Your Defaults in CLAUDE.md and import the relevant rules file: `@rules/typescript.md`, `@rules/web.md`, `@rules/ai-agents.md`, `@rules/data.md`, `@rules/security.md`, or `@rules/mobile.md`.
+Yes. Fill in Your Defaults in CLAUDE.md, then keep the files in `~/.claude/rules/` that match your stack and delete the rest. The stack-specific ones load only when Claude touches a matching file, and `basecamp-sync-agents` inlines all of them into `AGENTS.md` for Codex.
 
 ## License
 

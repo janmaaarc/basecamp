@@ -1,3 +1,15 @@
+---
+paths:
+  - "**/*.dart"
+  - "**/pubspec.yaml"
+  - "**/app.json"
+  - "**/app.config.*"
+  - "**/eas.json"
+  - "**/metro.config.*"
+  - "**/ios/**"
+  - "**/android/**"
+---
+
 # Mobile Development Rules (React Native / Flutter)
 
 - Never block the main thread. Move heavy work to background isolates or workers.

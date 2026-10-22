@@ -261,6 +261,7 @@ At session start, Claude will:
 - Be concise. Don't over-explain unless asked.
 - Recommend best practices. Point out trade-offs.
 - Challenge assumptions when appropriate.
+- For every plan, state whether it is over-engineered, under-engineered or right-sized, and why.
 
 # Writing Style
 

@@ -1,3 +1,15 @@
+## v1.12.0: 2026-10-22
+
+### Added
+- Optional Claude Code hooks in `scripts/`, installed to `~/.claude/scripts/` by setup.sh and enabled via README "Claude Code hooks": a Stop hook that enforces Done Means Verified, project-configured auto-formatting, skill-usage and instructions-loaded logs, and a status line with usage and effort.
+- Path-scoped rules: `typescript.md`, `web.md` and `mobile.md` load only when Claude touches a matching file.
+- CLAUDE.md asks every plan to state whether it is over-engineered, under-engineered or right-sized.
+
+### Changed
+- `basecamp-sync-agents` inlines every rule CLAUDE.md does not import, so Codex now gets the ai-agents, data, mobile, typescript and web rules it never saw before.
+- README no longer advises `@`-importing stack rules, which would load path-scoped ones every session.
+
+
 ## v1.11.1: 2026-10-14
 
 ### Changed

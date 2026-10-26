@@ -1,3 +1,9 @@
+## v1.12.1: 2026-10-26
+
+### Fixed
+- The `verify-before-done.sh` Stop hook no longer blocks after edits to files outside any git work tree (dotfiles, `~/.claude.json`), or inside `.git/`. Only project code now needs a typecheck, lint, build or test before a turn can end.
+
+
 ## v1.12.0: 2026-10-22
 
 ### Added

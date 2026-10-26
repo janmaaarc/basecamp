@@ -18,7 +18,7 @@ VERIFY_RE='(^|[;&|(\n]|\$\()\s*(([A-Z_][A-Z0-9_]*=\S*|rtk|time|timeout \S+|uv ru
 
 # One event per line: U = human prompt, E = code edit, V = verification command.
 EVENTS=$(jq -r --arg verify "$VERIFY_RE" --arg home "$HOME" '
-  def skipped: startswith($home + "/.claude/") or startswith("/tmp/") or startswith("/private/tmp/") or test("\\.(md|mdx|txt|rst)$");
+  def skipped: . == "" or startswith($home + "/.claude/") or startswith("/tmp/") or startswith("/private/tmp/") or test("\\.(md|mdx|txt|rst)$");
   if .type == "user" and .isMeta != true and (
       (.message.content | type) == "string"
       or ([.message.content[]? | select(.type == "text")] | length) > 0
@@ -28,7 +28,7 @@ EVENTS=$(jq -r --arg verify "$VERIFY_RE" --arg home "$HOME" '
     .message.content[]? | select(.type == "tool_use") |
     if (.name == "Edit" or .name == "Write" or .name == "MultiEdit" or .name == "NotebookEdit")
        and ((.input.file_path // .input.notebook_path // "") | skipped | not)
-    then "E"
+    then "E\t" + (.input.file_path // .input.notebook_path // "")
     elif .name == "Bash" and ((.input.command // "") | test($verify))
     then "V"
     else empty end
@@ -37,6 +37,15 @@ EVENTS=$(jq -r --arg verify "$VERIFY_RE" --arg home "$HOME" '
 
 # Keep only events after the last human prompt, then check a V follows the last E.
 TURN=$(printf '%s\n' "$EVENTS" | awk '/^U$/ {buf=""; next} {buf = buf $0 "\n"} END {printf "%s", buf}')
+# Only edits inside a git work tree count as project code; dotfiles and app config have no gate to run.
+TAB=$(printf '\t')
+TURN=$(printf '%s\n' "$TURN" | while IFS= read -r line; do
+  if [ "${line%%"$TAB"*}" = E ] && [ "$line" != E ]; then
+    [ "$(git -C "$(dirname "${line#E"$TAB"}")" rev-parse --is-inside-work-tree 2>/dev/null)" = true ] && echo E
+  elif [ -n "$line" ]; then
+    echo "$line"
+  fi
+done)
 printf '%s' "$TURN" | grep -q '^E$' || exit 0
 printf '%s' "$TURN" | awk '/^E$/ {v=0} /^V$/ {v=1} END {exit v ? 0 : 1}' && exit 0
 

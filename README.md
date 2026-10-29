@@ -59,7 +59,7 @@ Most coding-agent setups are minimal. This one is not. It covers:
 - [Obsidian](https://obsidian.md) (free, for per-project memory files)
 - Homebrew (for RTK)
 - Python 3.10+ (for Headroom)
-- Node.js 18+ (for claude-mem)
+- Node.js 18+ (for claude-mem); 22.23.4+ or 24.22.1+ for the optional n8n-mcp server
 
 ## Setup
 
@@ -114,19 +114,19 @@ npx ecc-agentshield scan
 
 **Core (recommended for everyone):**
 ```bash
-# ECC — agents, skills, hooks (install this first)
+# ECC: agents, skills, hooks (install this first)
 claude plugin marketplace add affaan-m/ECC
 claude plugin install ecc@ecc
 
-# Caveman — terse responses
+# Caveman: terse responses
 claude plugin marketplace add JuliusBrussee/caveman
 claude plugin install caveman@caveman
 
-# Ponytail — YAGNI coding rules
+# Ponytail: YAGNI coding rules
 claude plugin marketplace add DietrichGebert/ponytail
 claude plugin install ponytail@ponytail
 
-# Safety hooks — block dangerous commands, scan secrets
+# Safety hooks: block dangerous commands, scan secrets
 claude plugin marketplace add poshan0126/dotclaude
 claude plugin install safety-hooks@dotclaude
 ```
@@ -145,6 +145,17 @@ claude plugin install pg@aiguide
 claude plugin marketplace add pbakaus/impeccable
 claude plugin install impeccable@impeccable
 ```
+
+**Optional MCP servers:**
+```bash
+# Context7: current library docs on demand, remote, no install
+claude mcp add --scope user --transport http context7 https://mcp.context7.com/mcp
+
+# n8n-mcp: n8n node schemas and workflow validation, docs mode only
+claude mcp add --scope user n8n-mcp -e MCP_MODE=stdio -e LOG_LEVEL=error -e DISABLE_CONSOLE_OUTPUT=true -e N8N_MCP_TELEMETRY_DISABLED=true -- npx -y n8n-mcp@2.99.2
+```
+
+n8n-mcp telemetry is on by default and uploads the workflows you validate, so keep `N8N_MCP_TELEMETRY_DISABLED=true`. Without `N8N_API_URL` and `N8N_API_KEY` it cannot edit or delete live workflows. Pin a version: 2.96.2 and later need Node `^22.23.4` or `^24.22.1`. Context7 runs keyless; a free key from context7.com/dashboard raises its rate limits.
 
 ### 5. Install for Codex (if you use Codex)
 
@@ -175,6 +186,18 @@ Headroom works in Codex as an MCP server. Add to `~/.codex/config.toml`:
 [mcp_servers.headroom]
 command = "headroom"
 args = ["mcp", "serve"]
+```
+
+The optional MCP servers from step 4 go in the same file:
+
+```toml
+[mcp_servers.context7]
+url = "https://mcp.context7.com/mcp"
+
+[mcp_servers.n8n-mcp]
+command = "npx"
+args = ["-y", "n8n-mcp@2.99.2"]
+env = { "MCP_MODE" = "stdio", "LOG_LEVEL" = "error", "DISABLE_CONSOLE_OUTPUT" = "true", "N8N_MCP_TELEMETRY_DISABLED" = "true" }
 ```
 
 ### 6. Claude Code hooks (optional)
@@ -222,11 +245,15 @@ your-vault/
       PROJECT.md      <- what the project is, current status
       MISTAKES.md     <- recurring mistakes to avoid
       CONTRACT.md     <- plan for high-risk changes
+      DECISIONS.md    <- why X was chosen over Y, append-only
+      DEBT.md         <- known gaps deferred on purpose
       REQUIREMENTS.md <- checklist of what shipping this project needs
   Templates/
     PROJECT.md
     MISTAKES.md
     CONTRACT.md
+    DECISIONS.md
+    DEBT.md
     REQUIREMENTS.md
 ```
 
@@ -334,18 +361,18 @@ After installing or updating anything with Codex hooks, open `/hooks` in Codex a
 | RTK | Token-optimized CLI proxy | Yes, instruction-driven not hook-driven | [rtk-ai/rtk](https://github.com/rtk-ai/rtk) | Apache 2.0 |
 | safety-hooks | Block dangerous commands, scan secrets | No | [poshan0126/dotclaude](https://github.com/poshan0126/dotclaude) | MIT |
 | claude-mem | Persistent session memory | Yes, `--ide codex-cli` | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | Apache 2.0 |
-| agentshield | Scans `.claude/` config for risky permissions, hooks, MCP setups | [affaan-m/agentshield](https://github.com/affaan-m/agentshield) | MIT |
-| code-review-graph | Codebase graph (MCP + CLI) for blast-radius analysis and token reduction on large-repo reviews (optional) | [tirth8205/code-review-graph](https://github.com/tirth8205/code-review-graph) | MIT |
+| agentshield | Scans `.claude/` config for risky permissions, hooks, MCP setups | No, scans Claude Code config | [affaan-m/agentshield](https://github.com/affaan-m/agentshield) | MIT |
+| code-review-graph | Codebase graph (MCP and CLI) for blast-radius analysis and token reduction on large-repo reviews (optional) | Yes, as an MCP server | [tirth8205/code-review-graph](https://github.com/tirth8205/code-review-graph) | MIT |
+| Context7 | Current library docs on demand (optional) | Yes, as an MCP server | [upstash/context7](https://github.com/upstash/context7) | MIT |
+| n8n-mcp | n8n node schemas and workflow validation (optional) | Yes, as an MCP server | [czlonkowski/n8n-mcp](https://github.com/czlonkowski/n8n-mcp) | MIT |
 
 ## Maintenance
 
 ```bash
-# Update a plugin. `marketplace update` only refreshes the cache: installed_plugins.json
-# keeps pointing at the old version, and `install` no-ops with "already installed".
-# Uninstalling first is what actually switches the active version.
-for p in ecc caveman ponytail; do
-  claude plugin marketplace update "$p"
-  claude plugin uninstall "$p@$p" && claude plugin install "$p@$p"
+# Update plugins. `marketplace update` only refreshes the cache; `plugin update` switches the installed version.
+for p in ecc@ecc caveman@caveman ponytail@ponytail safety-hooks@dotclaude; do
+  claude plugin marketplace update "${p#*@}"
+  claude plugin update "$p"
 done
 
 # Regenerate AGENTS.md after editing ~/.claude/CLAUDE.md, so Codex sees the same rules
@@ -353,7 +380,7 @@ basecamp-sync-agents
 
 # Update tools
 brew upgrade rtk
-headroom update
+pipx upgrade headroom-ai    # if you installed Headroom with pipx; there is no `headroom update`
 ```
 
 Check what is actually active rather than trusting the install output:
@@ -361,6 +388,10 @@ Check what is actually active rather than trusting the install output:
 ```bash
 claude plugin list
 ```
+
+If a plugin update fails with "Plugin dependency install failed (bun)", run `bun upgrade` and retry. Newer plugin lockfiles need a newer bun.
+
+Updates apply only in a new session. End the session, restart the Headroom proxy if you upgraded it (it serves every session, so never mid-session), then fully quit and reopen your editor (Cmd+Q on macOS) so it picks up the new environment. A window reload keeps the old one.
 
 ## FAQ
 

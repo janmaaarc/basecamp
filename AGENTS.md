@@ -145,7 +145,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 - Use the project dependency file for correct versions. Never assume latest.
 - Keep a `.env.example` with every required var (names only, no values). Add, edit, or remove vars there whenever code changes require it, no need to ask each time. Never commit `.env`. If a project's `.gitignore` has a blanket `.env*` rule, add `!.env.example` so the template itself isn't excluded.
 - Comments: one line only. Explain why, not what. Example: `// retry here because Stripe webhooks fire twice on timeout`
-- Markdown files: kebab-case names (e.g. my-notes.md). Conventional root and meta docs keep their established uppercase names: `README.md`, `CHANGELOG.md`, `CLAUDE.md`, `LICENSE`, and the project memory files (`PROJECT.md`, `MISTAKES.md`, `CONTRACT.md`, `REQUIREMENTS.md`).
+- Markdown files: kebab-case names (e.g. my-notes.md). Conventional root and meta docs keep their established uppercase names: `README.md`, `CHANGELOG.md`, `CLAUDE.md`, `LICENSE`, and the project memory files (`PROJECT.md`, `MISTAKES.md`, `CONTRACT.md`, `DECISIONS.md`, `DEBT.md`, `REQUIREMENTS.md`).
 - Watch for obvious bugs proactively.
 - When sweeping for a pattern, enumerate the full set present and diff against the allowed set. Don't grep only for instances already suspected.
 
@@ -262,6 +262,7 @@ At session start, Claude will:
 - Recommend best practices. Point out trade-offs.
 - Challenge assumptions when appropriate.
 - For every plan, state whether it is over-engineered, under-engineered or right-sized, and why.
+- After updating plugins, MCP servers or the Node runtime, end the reply with the restart steps that apply them. Updates load only in a new session.
 
 # Writing Style
 
@@ -272,6 +273,8 @@ At session start, Claude will:
 - Prioritize accuracy over sounding impressive.
 - Never use emojis in responses or code.
 - Never use "+" as a conjunction. Use "and" or "&" instead.
+- No "not X, it's Y" contrasts. State Y directly.
+- No throat-clearing openers ("Here's what...", "Here's the thing"). Start with the point.
 
 # UI Icons
 

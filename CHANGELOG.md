@@ -1,3 +1,17 @@
+## v1.13.0: 2026-10-29
+
+### Added
+- `Templates/DECISIONS.md` and `Templates/DEBT.md`. `CLAUDE.md` already asked agents to create both per project, but no template shipped.
+- `Templates/REQUIREMENTS.md`: a Testing & Code Quality section (later sections renumbered). Every template now links all six project files.
+- README: optional Context7 and n8n-mcp MCP servers for Claude Code and Codex. n8n-mcp runs in docs-only mode with its default-on telemetry disabled.
+- `CLAUDE.md`: bans on "not X, it's Y" contrasts and throat-clearing openers, and a rule to end with restart steps after plugin, MCP server or Node updates.
+
+### Fixed
+- README Maintenance: `claude plugin update` replaces the uninstall and reinstall loop, and `pipx upgrade headroom-ai` replaces the nonexistent `headroom update`. Adds the `bun upgrade` fix for failed plugin dependency installs and the restart order.
+- README Tools table: two rows were missing the Codex column.
+- `CLAUDE.md` now lists `DECISIONS.md` and `DEBT.md` among the uppercase project files.
+
+
 ## v1.12.1: 2026-10-26
 
 ### Fixed

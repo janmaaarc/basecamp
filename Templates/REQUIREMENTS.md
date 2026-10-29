@@ -21,7 +21,7 @@ Priority: 🔴 High (ship without this = problem) | 🟡 Medium (needed soon aft
 Re-check this list at session start if REQUIREMENTS.md exists in the project folder. Flag any unchecked 🔴 item before calling work "done".
 -->
 
-Related: [[PROJECT]] | [[MISTAKES]]
+Related: [[PROJECT]] | [[MISTAKES]] | [[CONTRACT]] | [[DECISIONS]] | [[DEBT]]
 
 ---
 
@@ -295,7 +295,22 @@ Related: [[PROJECT]] | [[MISTAKES]]
 | Support chat widget | 🟢 | app, saas |
 | Internationalization (i18n) | 🟢 | saas |
 
-## 15. Payments & Billing
+## 15. Testing & Code Quality
+
+| Item | Priority | Types |
+|------|----------|-------|
+| Typecheck, lint, and build green before ship | 🔴 | landing, app, saas, api |
+| Lockfile committed and in sync with the manifest | 🔴 | landing, app, saas, api |
+| CI runs the same gates as local (typecheck, lint, build, test) | 🔴 | landing, app, saas, api |
+| Clean-cache deploy verified (warm build caches hide broken config) | 🔴 | landing, app, saas, api |
+| Tests for critical business logic (payments, auth, data transforms) | 🔴 | app, saas, api, automation |
+| Tests for integrations with side effects (webhooks, external APIs) | 🔴 | app, saas, api, automation |
+| Workflow smoke test after deploy (happy path and one failure path) | 🔴 | automation |
+| Lint/type debt tracked as an item, not silenced with disables | 🟡 | landing, app, saas, api |
+| Migration and schema-change tests | 🟡 | app, saas, api |
+| Staging deploy verified before prod cutover | 🟡 | app, saas, api |
+
+## 16. Payments & Billing
 
 <!-- Skip entirely if the project doesn't take payments. -->
 
@@ -310,7 +325,7 @@ Related: [[PROJECT]] | [[MISTAKES]]
 | Tax calculation | 🟢 | saas |
 | Usage-based billing | 🟢 | saas |
 
-## 16. AI / LLM
+## 17. AI / LLM
 
 <!-- Any project that calls an LLM or AI agent, whether it's a chatbot, an n8n AI Agent node, or an AI feature inside an app. -->
 
@@ -327,7 +342,7 @@ Related: [[PROJECT]] | [[MISTAKES]]
 | Human-in-the-loop review for high-stakes AI actions | 🟡 | automation, app, saas |
 | Multi-provider fallback (e.g. OpenRouter) | 🟢 | automation, app, saas |
 
-## 17. Client Handoff
+## 18. Client Handoff
 
 <!-- Only applies to freelance/contract client work where you're delivering to someone else. Skip entirely for internal/own projects, or if the contract has no handoff requirement. -->
 

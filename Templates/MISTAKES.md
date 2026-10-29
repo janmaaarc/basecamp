@@ -1,6 +1,6 @@
 # Mistakes Log
 
-Related: [[PROJECT]] | [[CONTRACT]] | [[REQUIREMENTS]]
+Related: [[PROJECT]] | [[CONTRACT]] | [[DECISIONS]] | [[DEBT]] | [[REQUIREMENTS]]
 
 Recurring mistakes to avoid. Check before implementing anything.
 

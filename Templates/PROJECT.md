@@ -1,24 +1,28 @@
 # Project Name
 
-Related: [[MISTAKES]] | [[CONTRACT]] | [[REQUIREMENTS]]
+Related: [[MISTAKES]] | [[CONTRACT]] | [[DECISIONS]] | [[DEBT]] | [[REQUIREMENTS]]
 
 ## What It Is
-<!-- One sentence describing the project -->
+<!-- One paragraph: what this project does and who it's for -->
 
 ## Type
 <!-- landing / app / saas / api / automation. Determines which rows of REQUIREMENTS.md apply -->
 
 ## Stack
-<!-- Languages, frameworks, databases, hosting -->
+- Framework:
+- Database:
+- Auth:
+- Hosting:
+- Other:
 
 ## Goals
-<!-- What this project needs to achieve -->
+<!-- What success looks like -->
 
 ## Key Decisions
-<!-- Important architectural or product decisions made so far -->
+<!-- Why certain tools or patterns were chosen -->
 
 ## Current Status
-<!-- What's working, what's in progress, what's blocked -->
+<!-- What's done, what's in progress, what's next -->
 
 ## Codebase Notes
-<!-- Anything the agent needs to know before touching the code -->
+<!-- Quirks, gotchas, important conventions specific to this project -->
